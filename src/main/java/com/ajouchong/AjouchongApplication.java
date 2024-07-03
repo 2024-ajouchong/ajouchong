@@ -1,4 +1,4 @@
-package com.ajouchong.ajouchong;
+package com.ajouchong;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
