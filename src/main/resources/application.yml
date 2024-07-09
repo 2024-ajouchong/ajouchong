@@ -1,0 +1,13 @@
+spring:
+  application:
+    name: ajouchong
+  datasource:
+    url: jdbc:postgresql://localhost:5432/ajouchong
+    username: chongchong
+    password: chong
+    driver-class-name: org.postgresql.Driver
+    jpa:
+      show-sql: true
+      database: postgresql
+      hibernate:
+        ddl-auto: update
