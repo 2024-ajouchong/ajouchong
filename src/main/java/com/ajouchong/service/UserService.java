@@ -18,9 +18,9 @@ public class UserService {
         this.passwordEncoder = passwordEncoder;
     }
 
-    public User registerUser(String u_name, String u_major, String u_pwd, UserRole u_grade) {
+    public User registerUser(String u_name, String u_major, String u_pwd, UserRole u_role) {
         String encodedPassword = passwordEncoder.encode(u_pwd);
-        User user = new User(u_name, u_major, encodedPassword, u_grade);
+        User user = new User(u_name, u_major, encodedPassword, u_role);
         return userRepository.save(user);
     }
 
