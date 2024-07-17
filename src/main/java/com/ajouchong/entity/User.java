@@ -23,7 +23,7 @@ public class User {
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false, length = 50)
-    private UserRole u_grade;
+    private UserRole u_role;
 
     public User() {}
 
@@ -31,6 +31,6 @@ public class User {
         this.u_name = u_name;
         this.u_major = u_major;
         this.u_pwd = u_pwd;
-        this.u_grade = u_grade;
+        this.u_role = u_role;
     }
 }

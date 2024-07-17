@@ -10,5 +10,5 @@ public class UserRegistrationRequest {
     private String u_name;
     private String u_major;
     private String u_pwd;
-    private UserRole u_grade;
+    private UserRole u_role;
 }
