@@ -1,6 +1,6 @@
 package com.ajouchong.entity;
 
-public enum UserGrade {
+public enum UserRole {
     ADMIN,
     STUDENT,
     COUNCIL
