@@ -27,7 +27,7 @@ public class User {
 
     public User() {}
 
-    public User(String u_name, String u_major, String u_pwd, UserRole u_grade) {
+    public User(String u_name, String u_major, String u_pwd, UserRole u_role) {
         this.u_name = u_name;
         this.u_major = u_major;
         this.u_pwd = u_pwd;
