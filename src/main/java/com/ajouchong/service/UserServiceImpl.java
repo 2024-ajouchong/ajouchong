@@ -1,6 +1,6 @@
 package com.ajouchong.service;
 
-import com.ajouchong.dto.UserRegistrationRequest;
+import com.ajouchong.dto.UserRegistrationRequestDto;
 import com.ajouchong.entity.User;
 import com.ajouchong.exception.DuplicateEmailException;
 import com.ajouchong.repository.UserRepository;
@@ -22,7 +22,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User join(UserRegistrationRequest requestDto) {
+    public User join(UserRegistrationRequestDto requestDto) {
         if (userRepository.existsByEmail(requestDto.getEmail())) {
             throw new DuplicateEmailException("이미 가입된 이메일 입니다: " + requestDto.getEmail());
         }

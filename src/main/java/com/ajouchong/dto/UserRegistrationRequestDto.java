@@ -10,7 +10,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class UserRegistrationRequest {
+public class UserRegistrationRequestDto {
 
     @NotBlank(message = "학번을 입력해주세요.")
     @Pattern(
