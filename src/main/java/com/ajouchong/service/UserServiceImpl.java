@@ -1,36 +1,38 @@
 package com.ajouchong.service;
 
+import com.ajouchong.dto.UserRegistrationRequest;
 import com.ajouchong.entity.User;
-import com.ajouchong.entity.UserRole;
+import com.ajouchong.exception.DuplicateEmailException;
 import com.ajouchong.repository.UserRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 
 @Service
-public class UserService {
-
+public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
 
-    public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder) {
+    public UserServiceImpl(UserRepository userRepository, PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
     }
 
-    public User registerUser(String u_name, String u_major, String u_pwd, UserRole u_role) {
-        String encodedPassword = passwordEncoder.encode(u_pwd);
-        User user = new User(u_name, u_major, encodedPassword, u_role);
+    @Override
+    public User join(UserRegistrationRequest requestDto) {
+        if (userRepository.existsByU_email(requestDto.getU_email())) {
+            throw new DuplicateEmailException("이미 가입된 이메일 입니다: " + requestDto.getU_email());
+        }
+
+        User user = requestDto.toEntity();
+        user.setU_pwd(passwordEncoder.encode(user.getU_pwd()));
         return userRepository.save(user);
     }
 
-    public Optional<User> findUserByU_name(String u_name) {
+    @Override
+    public Optional<User> findUser(String u_name) {
         return userRepository.findByU_name(u_name);
     }
 
-    public Optional<User> findUserByU_major(String u_major) {
-        return userRepository.findByU_major(u_major);
-    }
 }
