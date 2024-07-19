@@ -11,31 +11,41 @@ import lombok.Setter;
 @Setter
 public class UserRegistrationRequest {
 
+    @NotBlank(message = "학번을 입력해주세요.")
+    @Pattern(
+            regexp = "^\\d{9}$",
+            message = "학번은 9자리 숫자여야 합니다."
+    )
+    private String id;
+
     @NotBlank(message = "이름을 입력해주세요.")
-    private String u_name;
+    private String name;
 
     @NotBlank(message = "비밀번호를 입력해주세요.")
     @Pattern(
             regexp = "^(?=.*[A-Za-z])(?=.*\\d)[A-Za-z\\d]{9,}$",
             message = "비밀번호는 영어+숫자 조합으로 9자리 이상이어야 합니다."
     )
-    private String u_pwd;
+    private String pwd;
 
     @NotBlank(message = "이메일을 입력해주세요.")
     @Pattern(regexp = "^[A-Za-z0-9._%+-]+@ajou.ac.kr$", message = "이메일 형식이 올바르지 않습니다.")
-    private String u_email;
+    private String email;
 
     @NotBlank(message = "학과를 선택해주세요.")
-    private String u_major;
+    private String major;
 
     @NotBlank(message = "일반 학생/학생회를 선택해주세요.")
-    private UserRole u_role;
+    private UserRole role;
 
     public User toEntity() {;
         return User.builder()
-                .u_email(u_email)
-                .u_pwd(u_pwd)
-                .u_role(u_role)
+                .id(id)
+                .name(name)
+                .pwd(pwd)
+                .email(email)
+                .major(major)
+                .role(role)
                 .build();
     }
 }

@@ -50,10 +50,10 @@ public class UserController {
         Optional<User> currentUser = userServiceImpl.getCurrentUser();
         if (currentUser.isPresent()) {
             User user = currentUser.get();
-            ProfileResponse responseDto = new ProfileResponse(user.getUser_id(), user.getU_name(), user.getU_email(), user.getU_role(), user.getU_major());
+            ProfileResponse responseDto = new ProfileResponse(user.getId(), user.getName(), user.getEmail(), user.getMajor(), user.getRole());
             return ResponseEntity.ok(new ApiResponse<>(1, "사용자 정보 조회 성공", Map.of("user", responseDto)));
         } else {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(new ApiResponse<>(0, "인증되지 않은 사용자", null));
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(new ApiResponse<>(0, "사용자 정보가 없습니다.", null));
         }
     }
 

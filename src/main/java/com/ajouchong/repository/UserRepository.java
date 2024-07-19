@@ -8,11 +8,11 @@ import java.util.Optional;
 
 
 public interface UserRepository extends JpaRepository<User, Long> {
-    Optional<User> findByU_email(String u_email);
-    Optional<User> findByU_name(String u_name);
-    Optional<User> findByU_major(String u_major);
-    Optional<User> findByU_id(Long u_id);
-    Optional<User> findByU_role(UserRole u_role);
+    Optional<User> findByEmail(String email);
+    Optional<User> findByName(String name);
+    Optional<User> findByMajor(String major);
+    Optional<User> findById(String id);
+    Optional<User> findByRole(UserRole role);
 
-    boolean existsByU_email(String u_email);
+    boolean existsByEmail(String email);
 }

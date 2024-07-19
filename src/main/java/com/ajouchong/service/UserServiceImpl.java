@@ -23,18 +23,18 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User join(UserRegistrationRequest requestDto) {
-        if (userRepository.existsByU_email(requestDto.getU_email())) {
-            throw new DuplicateEmailException("이미 가입된 이메일 입니다: " + requestDto.getU_email());
+        if (userRepository.existsByEmail(requestDto.getEmail())) {
+            throw new DuplicateEmailException("이미 가입된 이메일 입니다: " + requestDto.getEmail());
         }
 
         User user = requestDto.toEntity();
-        user.setU_pwd(passwordEncoder.encode(user.getU_pwd()));
+        user.setPwd(passwordEncoder.encode(user.getPwd()));
         return userRepository.save(user);
     }
 
     @Override
-    public Optional<User> findUser(String u_name) {
-        return userRepository.findByU_name(u_name);
+    public Optional<User> findUser(String name) {
+        return userRepository.findByName(name);
     }
 
     @Override
@@ -45,7 +45,7 @@ public class UserServiceImpl implements UserService {
         }
 
         String username = authentication.getName();
-        return userRepository.findByU_name(username);
+        return userRepository.findByName(username);
     }
 
 }

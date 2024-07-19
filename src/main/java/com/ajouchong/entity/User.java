@@ -1,6 +1,7 @@
 package com.ajouchong.entity;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Pattern;
 import lombok.*;
 
 @Entity
@@ -9,32 +10,33 @@ import lombok.*;
 @Table(name = "users")
 public class User {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "user_id", nullable = false, length = 50)
-    private Long user_id;
+    @Column(nullable = false, length = 9, unique = true)
+    @Pattern(regexp = "^\\d{9}$", message = "학번은 9자리 숫자여야 합니다.")
+    private String id;
 
-    @Column(name = "u_name", nullable = false, length = 50)
-    private String u_name;
+    @Column(nullable = false, length = 50)
+    private String name;
 
-    @Column(name = "u_major", nullable = false, length = 50)
-    private String u_major;
+    @Column(nullable = false)
+    private String pwd;
 
-    @Column(name = "u_pwd", nullable = false)
-    private String u_pwd;
+    @Column(nullable = false, length = 50)
+    private String major;
 
-    @Column(name = "u_email", nullable = false)
-    private String u_email;
+    @Column(nullable = false)
+    private String email;
 
     @Enumerated(EnumType.STRING)
-    @Column(name = "u_role", nullable = false)
-    private UserRole u_role;
+    @Column(nullable = false)
+    private UserRole role;
 
     @Builder
-    public User(String u_name, String u_major, String u_pwd, String u_email, UserRole u_role) {
-        this.u_name = u_name;
-        this.u_major = u_major;
-        this.u_pwd = u_pwd;
-        this.u_email = u_email;
-        this.u_role = u_role;
+    public User(String id, String name, String pwd, String major, String email, UserRole role) {
+        this.id = id;
+        this.name = name;
+        this.pwd = pwd;
+        this.major = major;
+        this.email = email;
+        this.role = role;
     }
 }
