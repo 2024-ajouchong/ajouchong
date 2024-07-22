@@ -11,3 +11,6 @@ spring:
       database: postgresql
       hibernate:
         ddl-auto: update
+  jwt:
+    secret: 64461f01e1af406da538b9c48d801ce59142452199ff112fb5404c8e7e98e3ff
+    expiration: 86400000  # 1 day (ms)
