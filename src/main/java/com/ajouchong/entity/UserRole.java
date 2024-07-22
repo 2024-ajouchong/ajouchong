@@ -1,7 +1,14 @@
 package com.ajouchong.entity;
 
-public enum UserRole {
+import org.springframework.security.core.GrantedAuthority;
+
+public enum UserRole implements GrantedAuthority {
     ADMIN,
     STUDENT,
-    COUNCIL
+    COUNCIL;
+
+    @Override
+    public String getAuthority() {
+        return name();
+    }
 }
