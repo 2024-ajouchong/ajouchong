@@ -39,7 +39,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public Optional<User> findUser(String name) {
-        return userRepository.findByName(name);
+        return userRepository.findByUsername(name);
     }
 
     @Override
@@ -50,7 +50,7 @@ public class UserServiceImpl implements UserService {
         }
 
         String username = authentication.getName();
-        return userRepository.findByName(username);
+        return userRepository.findByUsername(username);
     }
 
     @Transactional
