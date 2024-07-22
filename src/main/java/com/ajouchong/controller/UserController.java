@@ -1,13 +1,19 @@
 package com.ajouchong.controller;
 
 import com.ajouchong.common.ApiResponse;
+import com.ajouchong.dto.LoginRequestDto;
 import com.ajouchong.dto.ProfileResponseDto;
 import com.ajouchong.dto.UserRegistrationRequestDto;
 import com.ajouchong.entity.User;
 import com.ajouchong.exception.DuplicateEmailException;
+import com.ajouchong.jwt.JwtTokenDto;
+import com.ajouchong.jwt.JwtTokenProvider;
 import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.validation.Errors;
@@ -20,13 +26,13 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/auth")
+@RequiredArgsConstructor
 public class UserController {
 
     private final UserServiceImpl userServiceImpl;
+    private final AuthenticationManager authenticationManager;
+    private final JwtTokenProvider jwtTokenProvider;
 
-    public UserController(UserServiceImpl userServiceImpl) {
-        this.userServiceImpl = userServiceImpl;
-    }
 
     @PostMapping("/signup")
     public ResponseEntity<ApiResponse<Map<String, Object>>> signupUser(@RequestBody @Valid UserRegistrationRequestDto requestDto, Errors errors) {
@@ -57,6 +63,21 @@ public class UserController {
         } else {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(new ApiResponse<>(0, "사용자 정보가 없습니다.", null));
         }
+    }
+
+    @PostMapping("/login")
+    public ResponseEntity<JwtTokenDto> authenticateUser(@RequestBody LoginRequestDto loginRequest) {
+        Authentication authentication = authenticationManager.authenticate(
+                new UsernamePasswordAuthenticationToken(
+                        loginRequest.getUsername(),
+                        loginRequest.getPassword()
+                )
+        );
+
+        SecurityContextHolder.getContext().setAuthentication(authentication);
+
+        JwtTokenDto jwtTokenDto = jwtTokenProvider.generateToken(authentication);
+        return ResponseEntity.ok(jwtTokenDto);
     }
 
 }
