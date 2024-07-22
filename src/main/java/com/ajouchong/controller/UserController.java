@@ -8,6 +8,8 @@ import com.ajouchong.exception.DuplicateEmailException;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
 import com.ajouchong.service.UserServiceImpl;
@@ -50,7 +52,7 @@ public class UserController {
         Optional<User> currentUser = userServiceImpl.getCurrentUser();
         if (currentUser.isPresent()) {
             User user = currentUser.get();
-            ProfileResponseDto responseDto = new ProfileResponseDto(user.getId(), user.getName(), user.getEmail(), user.getMajor(), user.getRole());
+            ProfileResponseDto responseDto = new ProfileResponseDto(user.getId(), user.getUsername(), user.getEmail(), user.getMajor(), user.getRole());
             return ResponseEntity.ok(new ApiResponse<>(1, "사용자 정보 조회 성공", Map.of("user", responseDto)));
         } else {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(new ApiResponse<>(0, "사용자 정보가 없습니다.", null));
