@@ -20,14 +20,14 @@ public class UserRegistrationRequestDto {
     private String id;
 
     @NotBlank(message = "이름을 입력해주세요.")
-    private String name;
+    private String username;
 
     @NotBlank(message = "비밀번호를 입력해주세요.")
     @Pattern(
             regexp = "^(?=.*[A-Za-z])(?=.*\\d)[A-Za-z\\d]{9,}$",
             message = "비밀번호는 영어+숫자 조합으로 9자리 이상이어야 합니다."
     )
-    private String pwd;
+    private String password;
 
     @NotBlank(message = "이메일을 입력해주세요.")
     @Pattern(regexp = "^[A-Za-z0-9._%+-]+@ajou.ac.kr$", message = "이메일 형식이 올바르지 않습니다.")
@@ -42,8 +42,8 @@ public class UserRegistrationRequestDto {
     public User toEntity() {;
         return User.builder()
                 .id(id)
-                .name(name)
-                .pwd(pwd)
+                .username(username)
+                .password(password)
                 .email(email)
                 .major(major)
                 .role(role)

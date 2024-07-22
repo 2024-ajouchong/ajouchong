@@ -28,7 +28,7 @@ public class UserServiceImpl implements UserService {
         }
 
         User user = requestDto.toEntity();
-        user.setPwd(passwordEncoder.encode(user.getPwd()));
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
         return userRepository.save(user);
     }
 

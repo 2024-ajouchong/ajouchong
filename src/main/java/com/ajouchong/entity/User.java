@@ -3,22 +3,27 @@ package com.ajouchong.entity;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Pattern;
 import lombok.*;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+
+import java.util.Collection;
+import java.util.List;
 
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter @Setter
 @Table(name = "users")
-public class User {
+public class User implements UserDetails {
     @Id
     @Column(nullable = false, length = 9, unique = true)
     @Pattern(regexp = "^\\d{9}$", message = "학번은 9자리 숫자여야 합니다.")
     private String id;
 
     @Column(nullable = false, length = 50)
-    private String name;
+    private String username;
 
     @Column(nullable = false)
-    private String pwd;
+    private String password;
 
     @Column(nullable = false, length = 50)
     private String major;
@@ -31,12 +36,37 @@ public class User {
     private UserRole role;
 
     @Builder
-    public User(String id, String name, String pwd, String major, String email, UserRole role) {
+    public User(String id, String username, String password, String major, String email, UserRole role) {
         this.id = id;
-        this.name = name;
-        this.pwd = pwd;
+        this.username = username;
+        this.password = password;
         this.major = major;
         this.email = email;
         this.role = role;
+    }
+
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return List.of();
+    }
+
+    @Override
+    public boolean isAccountNonExpired() {
+        return UserDetails.super.isAccountNonExpired();
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return UserDetails.super.isAccountNonLocked();
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return UserDetails.super.isCredentialsNonExpired();
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return UserDetails.super.isEnabled();
     }
 }
