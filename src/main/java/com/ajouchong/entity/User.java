@@ -28,22 +28,12 @@ public class User implements UserDetails {
     @Column(nullable = false, length = 50)
     private String major;
 
-    @Column(nullable = false)
+    @Column(nullable = false, unique = true)
     private String email;
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private UserRole role;
-
-    @Builder
-    public User(String id, String username, String password, String major, String email, UserRole role) {
-        this.id = id;
-        this.username = username;
-        this.password = password;
-        this.major = major;
-        this.email = email;
-        this.role = role;
-    }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -69,4 +59,15 @@ public class User implements UserDetails {
     public boolean isEnabled() {
         return UserDetails.super.isEnabled();
     }
+
+    @Builder
+    public User(String id, String username, String password, String major, String email, UserRole role) {
+        this.id = id;
+        this.username = username;
+        this.password = password;
+        this.major = major;
+        this.email = email;
+        this.role = role;
+    }
+
 }
