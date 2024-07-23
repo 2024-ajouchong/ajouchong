@@ -5,9 +5,9 @@ import com.ajouchong.dto.LoginRequestDto;
 import com.ajouchong.dto.ProfileResponseDto;
 import com.ajouchong.dto.UserRegistrationRequestDto;
 import com.ajouchong.entity.User;
-import com.ajouchong.exception.DuplicateEmailException;
 import com.ajouchong.jwt.JwtTokenDto;
 import com.ajouchong.jwt.JwtTokenProvider;
+import com.ajouchong.service.UserServiceImpl;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -16,11 +16,8 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
-import com.ajouchong.service.UserServiceImpl;
 
-import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 
@@ -35,22 +32,9 @@ public class UserController {
 
 
     @PostMapping("/signup")
-    public ResponseEntity<ApiResponse<Map<String, Object>>> signupUser(@RequestBody @Valid UserRegistrationRequestDto requestDto, Errors errors) {
-        if (errors.hasErrors()) {
-            return ResponseEntity.badRequest().body(new ApiResponse<>(0, "회원가입에 실패했습니다.", null));
-        }
-
-        try{
-            User savedUser = userServiceImpl.join(requestDto);
-            return ResponseEntity.status(HttpStatus.CREATED).body(new ApiResponse<>(1, "회원가입이 완료되었습니다.", Map.of("user", savedUser)));
-        }
-        catch(DuplicateEmailException ex){
-            Map<String, Object> errorData = new HashMap<>();
-            errorData.put("errCode", "duplicate_email");
-            errorData.put("errMsg", ex.getMessage());
-            return ResponseEntity.badRequest().body(new ApiResponse<>(0, "중복된 이메일입니다.", errorData));
-        }
-
+    public ResponseEntity<ApiResponse<Map<String, Object>>> signupUser(@RequestBody @Valid UserRegistrationRequestDto requestDto) {
+        User savedUser = userServiceImpl.join(requestDto);
+        return ResponseEntity.status(HttpStatus.CREATED).body(new ApiResponse<>(1, "회원가입이 완료되었습니다.", Map.of("user", savedUser)));
     }
 
     @GetMapping("/profile")
