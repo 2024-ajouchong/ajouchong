@@ -39,7 +39,7 @@ public class UserRegistrationRequestDto {
     @NotNull(message = "일반 학생/학생회를 선택해주세요.")
     private UserRole role;
 
-    public User toEntity() {;
+    public User toEntity() {
         return User.builder()
                 .id(id)
                 .username(username)
