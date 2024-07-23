@@ -39,7 +39,7 @@ public class SecurityConfig {
                 .authorizeHttpRequests(authorizeRequests ->
                         authorizeRequests
                                 .requestMatchers("/api/auth/**", "/public/**").permitAll()
-                                .requestMatchers("/api/member/mypage").authenticated() // 마이페이지 API는 인증 필요
+                                .requestMatchers("/api/user/profile").authenticated() // 인증 필요 API
                                 .anyRequest().authenticated()) // 기타 모든 요청 인증 필요
                 .addFilterBefore(new JwtAuthenticationFilter(jwtTokenProvider), UsernamePasswordAuthenticationFilter.class); // JWT 인증 필터 추가
 
