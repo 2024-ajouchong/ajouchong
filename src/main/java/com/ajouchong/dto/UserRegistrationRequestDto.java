@@ -2,9 +2,7 @@ package com.ajouchong.dto;
 
 import com.ajouchong.entity.User;
 import com.ajouchong.entity.UserRole;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Pattern;
+import jakarta.validation.constraints.*;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -20,6 +18,7 @@ public class UserRegistrationRequestDto {
     private String id;
 
     @NotBlank(message = "이름을 입력해주세요.")
+    @Size(min = 1, max = 5)
     private String username;
 
     @NotBlank(message = "비밀번호를 입력해주세요.")
@@ -30,10 +29,11 @@ public class UserRegistrationRequestDto {
     private String password;
 
     @NotBlank(message = "이메일을 입력해주세요.")
+    @Email
     @Pattern(regexp = "^[A-Za-z0-9._%+-]+@ajou.ac.kr$", message = "이메일 형식이 올바르지 않습니다.")
     private String email;
 
-    @NotBlank(message = "학과를 선택해주세요.")
+    @NotNull(message = "학과를 선택해주세요.")
     private String major;
 
     @NotNull(message = "일반 학생/학생회를 선택해주세요.")

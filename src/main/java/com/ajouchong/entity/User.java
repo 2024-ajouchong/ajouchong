@@ -23,12 +23,14 @@ public class User implements UserDetails {
     private String username;
 
     @Column(nullable = false, length = 30)
+    @Pattern(regexp = "^(?=.*[A-Za-z])(?=.*\\d)[A-Za-z\\d]{9,}$")
     private String password;
 
     @Column(nullable = false, length = 50)
     private String major;
 
     @Column(nullable = false, unique = true)
+    @Pattern(regexp = "^[A-Za-z0-9._%+-]+@ajou.ac.kr$")
     private String email;
 
     @Enumerated(EnumType.STRING)
