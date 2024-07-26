@@ -1,6 +1,7 @@
 package com.ajouchong.service;
 
 import com.ajouchong.dto.UserRegistrationRequestDto;
+import com.ajouchong.dto.UserRegistrationResponseDto;
 import com.ajouchong.entity.User;
 import com.ajouchong.entity.UserRole;
 import com.ajouchong.repository.UserRepository;
@@ -53,7 +54,7 @@ public class UserServiceImplTest {
         when(userRepository.save(any(User.class))).thenReturn(user);
 
         // When
-        User savedUser = userService.join(dto);
+        UserRegistrationResponseDto savedUser = userService.join(dto);
 
         // Then
         assertNotNull(savedUser);
