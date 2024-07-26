@@ -1,6 +1,7 @@
 package com.ajouchong.service;
 
 import com.ajouchong.dto.UserRegistrationRequestDto;
+import com.ajouchong.dto.UserRegistrationResponseDto;
 import com.ajouchong.entity.User;
 import com.ajouchong.exception.DuplicateEmailException;
 import com.ajouchong.jwt.JwtTokenDto;
@@ -27,14 +28,23 @@ public class UserServiceImpl implements UserService {
 
     @Transactional
     @Override
-    public User join(UserRegistrationRequestDto requestDto) {
+    public UserRegistrationResponseDto join(UserRegistrationRequestDto requestDto) {
         if (userRepository.existsByEmail(requestDto.getEmail())) {
             throw new DuplicateEmailException("이미 가입된 이메일 입니다: " + requestDto.getEmail());
         }
 
         User user = requestDto.toEntity();
         user.setPassword(passwordEncoder.encode(user.getPassword()));
-        return userRepository.save(user);
+        User savedUser = userRepository.save(user);
+
+        return new UserRegistrationResponseDto(
+                savedUser.getId(),
+                savedUser.getUsername(),
+                savedUser.getPassword(),
+                savedUser.getEmail(),
+                savedUser.getMajor(),
+                savedUser.getRole()
+        );
     }
 
     @Override

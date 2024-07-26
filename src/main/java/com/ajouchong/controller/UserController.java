@@ -4,6 +4,7 @@ import com.ajouchong.common.ApiResponse;
 import com.ajouchong.dto.LoginRequestDto;
 import com.ajouchong.dto.ProfileResponseDto;
 import com.ajouchong.dto.UserRegistrationRequestDto;
+import com.ajouchong.dto.UserRegistrationResponseDto;
 import com.ajouchong.entity.User;
 import com.ajouchong.jwt.JwtTokenDto;
 import com.ajouchong.jwt.JwtTokenProvider;
@@ -31,9 +32,9 @@ public class UserController {
 
 
     @PostMapping("/signup")
-    public ResponseEntity<ApiResponse<Map<String, Object>>> signupUser(@RequestBody UserRegistrationRequestDto requestDto) {
-        User savedUser = userService.join(requestDto);
-        return ResponseEntity.status(HttpStatus.CREATED).body(new ApiResponse<>(1, "회원가입이 완료되었습니다.", Map.of("user", savedUser)));
+    public ResponseEntity<ApiResponse<UserRegistrationResponseDto>> signupUser(@RequestBody UserRegistrationRequestDto requestDto) {
+        UserRegistrationResponseDto responseDto = userService.join(requestDto);
+        return ResponseEntity.status(HttpStatus.CREATED).body(new ApiResponse<>(1, "회원가입이 완료되었습니다.", responseDto));
     }
 
     @GetMapping("/profile")
