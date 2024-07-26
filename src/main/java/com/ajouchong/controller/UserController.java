@@ -7,8 +7,7 @@ import com.ajouchong.dto.UserRegistrationRequestDto;
 import com.ajouchong.entity.User;
 import com.ajouchong.jwt.JwtTokenDto;
 import com.ajouchong.jwt.JwtTokenProvider;
-import com.ajouchong.service.UserServiceImpl;
-import jakarta.validation.Valid;
+import com.ajouchong.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -26,20 +25,20 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class UserController {
 
-    private final UserServiceImpl userServiceImpl;
+    private final UserService userService;
     private final AuthenticationManager authenticationManager;
     private final JwtTokenProvider jwtTokenProvider;
 
 
     @PostMapping("/signup")
-    public ResponseEntity<ApiResponse<Map<String, Object>>> signupUser(@RequestBody @Valid UserRegistrationRequestDto requestDto) {
-        User savedUser = userServiceImpl.join(requestDto);
+    public ResponseEntity<ApiResponse<Map<String, Object>>> signupUser(@RequestBody UserRegistrationRequestDto requestDto) {
+        User savedUser = userService.join(requestDto);
         return ResponseEntity.status(HttpStatus.CREATED).body(new ApiResponse<>(1, "회원가입이 완료되었습니다.", Map.of("user", savedUser)));
     }
 
     @GetMapping("/profile")
     public ResponseEntity<ApiResponse<Map<String, Object>>> profile() {
-        Optional<User> currentUser = userServiceImpl.getCurrentUser();
+        Optional<User> currentUser = userService.getCurrentUser();
         if (currentUser.isPresent()) {
             User user = currentUser.get();
             ProfileResponseDto responseDto = new ProfileResponseDto(user.getId(), user.getUsername(), user.getEmail(), user.getMajor(), user.getRole());
