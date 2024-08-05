@@ -54,7 +54,7 @@ public class UserServiceImplTest {
         when(userRepository.save(any(User.class))).thenReturn(user);
 
         // When
-        UserRegistrationResponseDto savedUser = userService.join(dto);
+        UserRegistrationResponseDto savedUser = userService.save(dto);
 
         // Then
         assertNotNull(savedUser);
