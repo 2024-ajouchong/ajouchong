@@ -28,7 +28,7 @@ public class UserServiceImpl implements UserService {
 
     @Transactional
     @Override
-    public UserRegistrationResponseDto join(UserRegistrationRequestDto requestDto) {
+    public UserRegistrationResponseDto save(UserRegistrationRequestDto requestDto) {
         if (userRepository.existsByEmail(requestDto.getEmail())) {
             throw new DuplicateEmailException("이미 가입된 이메일 입니다: " + requestDto.getEmail());
         }

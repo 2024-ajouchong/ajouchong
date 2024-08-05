@@ -9,6 +9,7 @@ import com.ajouchong.entity.User;
 import com.ajouchong.jwt.JwtTokenDto;
 import com.ajouchong.jwt.JwtTokenProvider;
 import com.ajouchong.service.UserService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -32,8 +33,8 @@ public class UserController {
 
 
     @PostMapping("/signup")
-    public ResponseEntity<ApiResponse<UserRegistrationResponseDto>> signupUser(@RequestBody UserRegistrationRequestDto requestDto) {
-        UserRegistrationResponseDto responseDto = userService.join(requestDto);
+    public ResponseEntity<ApiResponse<UserRegistrationResponseDto>> signupUser(@RequestBody @Valid UserRegistrationRequestDto requestDto) {
+        UserRegistrationResponseDto responseDto = userService.save(requestDto);
         return ResponseEntity.status(HttpStatus.CREATED).body(new ApiResponse<>(1, "회원가입이 완료되었습니다.", responseDto));
     }
 
