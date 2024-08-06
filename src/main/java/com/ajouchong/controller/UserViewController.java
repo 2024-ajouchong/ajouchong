@@ -14,9 +14,4 @@ public class UserViewController {
     public String signup(){
         return "signup";
     }
-
-    @GetMapping("/error")
-    public String error() {
-        return "error"; // View name for error page
-    }
 }
