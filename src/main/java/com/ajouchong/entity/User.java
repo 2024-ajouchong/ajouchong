@@ -1,88 +1,75 @@
 package com.ajouchong.entity;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.*;
 import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
 import java.util.List;
 
-@Entity
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
-@Getter @Setter
 @Table(name = "users")
-public class User implements UserDetails {
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@Getter
+@Entity
+public class User implements UserDetails { // UserDetails를 상속받아 인증 객체로 사용
+
     @Id
-    @Column(unique = true)
-    @NotBlank(message = "학번을 입력해주세요.")
-    @Pattern(
-            regexp = "^\\d{9}$",
-            message = "학번은 9자리 숫자여야 합니다."
-    )
-    private String id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id", updatable = false)
+    private Long id;
 
-    @Column
-    @NotBlank(message = "이름을 입력해주세요.")
-    @Size(min = 1, max = 5)
-    private String username;
-
-    @Column
-    @NotBlank(message = "비밀번호를 입력해주세요.")
-    @Pattern(
-            regexp = "^(?=.*[A-Za-z])(?=.*\\d)[A-Za-z\\d]{9,}$",
-            message = "비밀번호는 영어+숫자 조합으로 9자리 이상이어야 합니다."
-    )
-    private String password;
-
-    @Column(unique = true)
-    @NotBlank(message = "이메일을 입력해주세요.")
-    @Email
-    @Pattern(regexp = "^[A-Za-z0-9._%+-]+@ajou.ac.kr$", message = "이메일 형식이 올바르지 않습니다.")
+    @Column(name = "email", nullable = false, unique = true)
     private String email;
 
-    @Column
-    @NotNull(message = "학과를 선택해주세요.")
-    private String major;
-
-    @Enumerated(EnumType.STRING)
-    @Column
-    @NotNull(message = "일반 학생/학생회를 선택해주세요.")
-    private UserRole role;
-
-    @Override
-    public Collection<? extends GrantedAuthority> getAuthorities() {
-        return List.of(role);
-    }
-
-    @Override
-    public boolean isAccountNonExpired() {
-        return UserDetails.super.isAccountNonExpired();
-    }
-
-    @Override
-    public boolean isAccountNonLocked() {
-        return UserDetails.super.isAccountNonLocked();
-    }
-
-    @Override
-    public boolean isCredentialsNonExpired() {
-        return UserDetails.super.isCredentialsNonExpired();
-    }
-
-    @Override
-    public boolean isEnabled() {
-        return UserDetails.super.isEnabled();
-    }
+    @Column(name = "password", nullable = false)
+    private String password;
 
     @Builder
-    public User(String id, String username, String password, String major, String email, UserRole role) {
-        this.id = id;
-        this.username = username;
-        this.password = password;
-        this.major = major;
+    public User(String email, String password, String auth) {
         this.email = email;
-        this.role = role;
+        this.password = password;
+    }
+
+
+    @Override // 권한 반환
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return List.of(new SimpleGrantedAuthority("user"));
+    }
+
+    @Override
+    public String getUsername() {
+        return email;
+    }
+
+    @Override
+    public String getPassword() {
+        return password;
+    }
+
+    // 계정 만료 여부 반환
+    @Override
+    public boolean isAccountNonExpired(){
+        // 만료되었는지 확인하는 로직
+        return true; // true -> 만료되지 않음
+    }
+
+    // 계정 잠금 여부 반환
+    @Override
+    public boolean isAccountNonLocked(){
+        return true; // true -> 잠금되지 않음
+    }
+
+    // 패스워드 만료 여부 반환
+    @Override
+    public boolean isCredentialsNonExpired(){
+        return true; // true -> 만료되지 않음
+    }
+
+    // 계정 사용 가능 여부 변환
+    @Override
+    public boolean isEnabled(){
+        return true; // true -> 사용 가능
     }
 }
