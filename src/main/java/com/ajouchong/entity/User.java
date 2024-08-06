@@ -20,6 +20,9 @@ public class User implements UserDetails { // UserDetails를 상속받아 인증
     @Column(name = "id", updatable = false)
     private Long id;
 
+    @Column(name = "name", nullable = false, unique = true)
+    private String name;
+
     @Column(name = "email", nullable = false, unique = true)
     private String email;
 
@@ -27,7 +30,8 @@ public class User implements UserDetails { // UserDetails를 상속받아 인증
     private String password;
 
     @Builder
-    public User(String email, String password, String auth) {
+    public User(String name, String email, String password, String auth) {
+        this.name = name;
         this.email = email;
         this.password = password;
     }
@@ -40,7 +44,7 @@ public class User implements UserDetails { // UserDetails를 상속받아 인증
 
     @Override
     public String getUsername() {
-        return email;
+        return name;
     }
 
     @Override

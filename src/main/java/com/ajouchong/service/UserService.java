@@ -14,12 +14,13 @@ public class UserService {
     private final UserRepository userRepository;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
-    public Long save(AddUserRequestDto requestDto){
-        return userRepository.save(User.builder()
+    public void save(AddUserRequestDto requestDto){
+        userRepository.save(User.builder()
+                .name(requestDto.getName())
                 .email(requestDto.getEmail())
                 // 패스워드 암호화
                 .password(bCryptPasswordEncoder.encode(requestDto.getPassword()))
-                .build()).getId();
+                .build());
     }
 
 }
