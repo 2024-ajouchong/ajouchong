@@ -1,23 +1,25 @@
 package com.ajouchong.controller;
 
-import com.ajouchong.dto.AddUserRequestDto;
+import com.ajouchong.common.ApiResponse;
+import com.ajouchong.dto.AddMemberRequestDto;
 import com.ajouchong.entity.Member;
-import com.ajouchong.service.UserService;
+import com.ajouchong.service.MemberService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RequiredArgsConstructor
 @RestController
-public class UserApiController {
+@RequestMapping("/auth")
+public class MemberController {
 
-    private final UserService userService;
+    private final MemberService memberService;
 
     @PostMapping("/signup")
-    public ResponseEntity<Member> signup(@RequestBody AddUserRequestDto requestDto) {
-        Member member = userService.save(requestDto);
-        return ResponseEntity.ok().body(member);
+    public ApiResponse<Member> signup(@RequestBody AddMemberRequestDto requestDto) {
+        Member member = memberService.save(requestDto);
+        return new ApiResponse<>(1, "회원가입에 성공했습니다.", member);
     }
 }
