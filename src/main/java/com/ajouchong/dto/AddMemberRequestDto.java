@@ -1,10 +1,8 @@
 package com.ajouchong.dto;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.Data;
 
-@Getter
-@Setter
+@Data
 public class AddUserRequestDto {
     private String name;
     private String email;

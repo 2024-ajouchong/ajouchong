@@ -14,12 +14,6 @@ spring:
     properties:
       hibernate:
         show_sql: true
-logging:
-  level:
-    org:
-      springframework: DEBUG
-    com:
-      ajouchong: DEBUG
 
 
 jwt:

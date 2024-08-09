@@ -1,6 +1,6 @@
 package com.ajouchong.service;
 
-import com.ajouchong.entity.User;
+import com.ajouchong.entity.Member;
 import com.ajouchong.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -15,7 +15,7 @@ public class UserDetailService implements UserDetailsService {
 
     // 사용자 이름(email)으로 사용자 정보를 가져오는 메소드
     @Override
-    public User loadUserByUsername(String email) {
+    public Member loadUserByUsername(String email) {
         return userRepository.findByEmail(email)
                 .orElseThrow(() -> new IllegalArgumentException((email)));
     }
