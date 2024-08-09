@@ -1,20 +1,20 @@
 package com.ajouchong.service;
 
-import com.ajouchong.dto.AddUserRequestDto;
+import com.ajouchong.dto.AddMemberRequestDto;
 import com.ajouchong.entity.Member;
-import com.ajouchong.repository.UserRepository;
+import com.ajouchong.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @RequiredArgsConstructor
 @Service
-public class UserService {
+public class MemberService {
 
-    private final UserRepository userRepository;
+    private final MemberRepository memberRepository;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
-    public Member save(AddUserRequestDto requestDto) {
+    public Member save(AddMemberRequestDto requestDto) {
         System.out.println("11 "+requestDto.getName());
 
         Member member = Member.builder()
@@ -23,7 +23,7 @@ public class UserService {
                 .password(requestDto.getPassword())
                 .build();
 
-        return userRepository.save(member);
+        return memberRepository.save(member);
     }
 
 }

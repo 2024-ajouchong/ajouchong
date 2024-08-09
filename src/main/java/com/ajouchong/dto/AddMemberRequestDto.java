@@ -3,7 +3,7 @@ package com.ajouchong.dto;
 import lombok.Data;
 
 @Data
-public class AddUserRequestDto {
+public class AddMemberRequestDto {
     private String name;
     private String email;
     private String password;
