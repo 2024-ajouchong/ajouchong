@@ -15,12 +15,10 @@ public class MemberService {
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
     public Member save(AddMemberRequestDto requestDto) {
-        System.out.println("11 "+requestDto.getName());
-
         Member member = Member.builder()
                 .name(requestDto.getName())
                 .email(requestDto.getEmail())
-                .password(requestDto.getPassword())
+                .password(bCryptPasswordEncoder.encode(requestDto.getPassword()))
                 .build();
 
         return memberRepository.save(member);
