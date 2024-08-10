@@ -19,6 +19,9 @@ public class MemberService {
                 .name(requestDto.getName())
                 .email(requestDto.getEmail())
                 .password(bCryptPasswordEncoder.encode(requestDto.getPassword()))
+                .student_id(requestDto.getStudent_id())
+                .major(requestDto.getMajor())
+                .role(requestDto.getRole())
                 .build();
 
         return memberRepository.save(member);

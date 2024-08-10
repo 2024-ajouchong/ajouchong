@@ -1,15 +1,17 @@
 package com.ajouchong.entity;
 
 import jakarta.persistence.*;
-import lombok.*;
+import lombok.AccessLevel;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
 import java.util.List;
 
-@Table(name = "users")
+@Table(name = "member")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
 @Entity
@@ -17,8 +19,8 @@ public class Member implements UserDetails { // UserDetails를 상속받아 인�
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id", updatable = false)
-    private Long id;
+    @Column(name = "user_id", updatable = false)
+    private Long user_id;
 
     @Column(name = "name", nullable = false, unique = true)
     private String name;
@@ -29,17 +31,30 @@ public class Member implements UserDetails { // UserDetails를 상속받아 인�
     @Column(name = "password", nullable = false)
     private String password;
 
+    @Column(name = "student_id", nullable = false, unique = true)
+    private String student_id;
+
+    @Column(name = "major", nullable = false)
+    private String major;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "role", nullable = false)
+    private MemberRole role;
+
     @Builder
-    public Member(String name, String email, String password) {
+    public Member(String name, String email, String password, String student_id, String major, MemberRole role) {
         this.name = name;
         this.email = email;
         this.password = password;
+        this.student_id = student_id;
+        this.major = major;
+        this.role = role;
     }
 
 
     @Override // 권한 반환
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return List.of(new SimpleGrantedAuthority("user"));
+        return List.of(role);
     }
 
     @Override
