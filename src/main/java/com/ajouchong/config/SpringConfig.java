@@ -11,5 +11,4 @@ public class SpringConfig {
         return new BCryptPasswordEncoder();
     }
 
-
 }

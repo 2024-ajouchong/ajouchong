@@ -22,7 +22,7 @@ public class Member implements UserDetails { // UserDetails를 상속받아 인�
     @Column(name = "user_id", updatable = false)
     private Long user_id;
 
-    @Column(name = "name", nullable = false, unique = true)
+    @Column(name = "name", nullable = false)
     private String name;
 
     @Column(name = "email", nullable = false, unique = true)
