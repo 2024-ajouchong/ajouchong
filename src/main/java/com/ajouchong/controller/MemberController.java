@@ -1,11 +1,18 @@
 package com.ajouchong.controller;
 
 import com.ajouchong.common.ApiResponse;
+import com.ajouchong.jwt.JwtAuthenticationResponse;
 import com.ajouchong.dto.AddMemberRequestDto;
+import com.ajouchong.dto.LoginRequestDto;
 import com.ajouchong.entity.Member;
 import com.ajouchong.exception.DuplicateEmailException;
+import com.ajouchong.jwt.JwtTokenProvider;
 import com.ajouchong.service.MemberService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -17,6 +24,8 @@ import org.springframework.web.bind.annotation.RestController;
 public class MemberController {
 
     private final MemberService memberService;
+    private final AuthenticationManager authenticationManager;
+    private final JwtTokenProvider jwtTokenProvider;
 
     @PostMapping("/signup")
     public ApiResponse<Member> signup(@RequestBody AddMemberRequestDto requestDto) {
@@ -27,4 +36,22 @@ public class MemberController {
             return new ApiResponse<>(0, "이미 존재하는 이메일입니다.", null);
         }
     }
+
+    @PostMapping("/login")
+    public ApiResponse<JwtAuthenticationResponse> authenticateUser(@RequestBody LoginRequestDto loginRequest) {
+        Authentication authentication = authenticationManager.authenticate(
+                new UsernamePasswordAuthenticationToken(
+                        loginRequest.getEmail(),
+                        loginRequest.getPassword()
+                )
+        );
+
+        SecurityContextHolder.getContext().setAuthentication(authentication);
+        String jwt = jwtTokenProvider.generateToken(authentication.getName());
+
+        JwtAuthenticationResponse jwtResponse = new JwtAuthenticationResponse(jwt);
+
+        return new ApiResponse<>(1, "로그인에 성공했습니다.", jwtResponse);
+    }
+
 }
