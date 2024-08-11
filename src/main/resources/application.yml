@@ -11,3 +11,8 @@ spring:
     properties:
       hibernate:
         show_sql: true
+
+
+jwt:
+  secret: ${secret}
+  expiration_time: 86400000 #1일
