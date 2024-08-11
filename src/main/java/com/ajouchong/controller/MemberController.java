@@ -1,15 +1,16 @@
 package com.ajouchong.controller;
 
 import com.ajouchong.common.ApiResponse;
-import com.ajouchong.jwt.JwtAuthenticationResponse;
 import com.ajouchong.dto.AddMemberRequestDto;
 import com.ajouchong.dto.LoginRequestDto;
 import com.ajouchong.entity.Member;
 import com.ajouchong.exception.DuplicateEmailException;
+import com.ajouchong.jwt.JwtAuthenticationResponse;
 import com.ajouchong.jwt.JwtTokenProvider;
 import com.ajouchong.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -39,19 +40,24 @@ public class MemberController {
 
     @PostMapping("/login")
     public ApiResponse<JwtAuthenticationResponse> authenticateUser(@RequestBody LoginRequestDto loginRequest) {
-        Authentication authentication = authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(
-                        loginRequest.getEmail(),
-                        loginRequest.getPassword()
-                )
-        );
+        try {
+            Authentication authentication = authenticationManager.authenticate(
+                    new UsernamePasswordAuthenticationToken(
+                            loginRequest.getEmail(),
+                            loginRequest.getPassword()
+                    )
+            );
 
-        SecurityContextHolder.getContext().setAuthentication(authentication);
-        String jwt = jwtTokenProvider.generateToken(authentication.getName());
+            SecurityContextHolder.getContext().setAuthentication(authentication);
+            String jwt = jwtTokenProvider.generateToken(authentication.getName());
 
-        JwtAuthenticationResponse jwtResponse = new JwtAuthenticationResponse(jwt);
+            JwtAuthenticationResponse jwtResponse = new JwtAuthenticationResponse(jwt);
 
-        return new ApiResponse<>(1, "로그인에 성공했습니다.", jwtResponse);
+            return new ApiResponse<>(1, "로그인에 성공했습니다.", jwtResponse);
+        }catch (BadCredentialsException e) {
+            return new ApiResponse<>(0, "로그인 실패: 이메일 또는 비밀번호가 올바르지 않습니다.", null);
+        }
+
     }
 
 }
