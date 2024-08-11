@@ -1,4 +1,4 @@
-package com.ajouchong.common;
+package com.ajouchong.jwt;
 
 import lombok.Getter;
 import lombok.Setter;
