@@ -3,20 +3,22 @@ package com.ajouchong.service;
 import com.ajouchong.entity.Member;
 import com.ajouchong.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 @RequiredArgsConstructor
 @Service
-// 스프링 시큐리티에서 사용자 정보를 가져오는 인터페이스
 public class MemberDetailService implements UserDetailsService {
 
     private final MemberRepository memberRepository;
 
-    // 사용자 이름(email)으로 사용자 정보를 가져오는 메소드
     @Override
-    public Member loadUserByUsername(String email) {
-        return memberRepository.findByEmail(email)
-                .orElseThrow(() -> new IllegalArgumentException((email)));
+    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
+        Member member = memberRepository.findByEmail(email)
+                .orElseThrow(() -> new UsernameNotFoundException("사용자를 찾을 수 없습니다: " + email));
+
+        return new org.springframework.security.core.userdetails.User(member.getEmail(), member.getPassword(), member.getAuthorities());
     }
 }
