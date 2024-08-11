@@ -1,2 +1,10 @@
-package com.ajouchong.dto;public class LogInRequestDto {
+package com.ajouchong.dto;
+
+import lombok.Getter;
+import lombok.Setter;
+
+@Getter @Setter
+public class LoginRequestDto {
+    private String email;
+    private String password;
 }
