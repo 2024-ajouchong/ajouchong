@@ -1,6 +1,10 @@
 package com.ajouchong.jwt;
 
-import io.jsonwebtoken.*;
+import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.JwtException;
+import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.SignatureAlgorithm;
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
@@ -37,8 +41,8 @@ public class JwtTokenProvider {
                 .compact();
     }
 
-    // 토큰에서 사용자 이름 추출
-    public String getUsernameFromJWT(String token) {
+    // 토큰에서 사용자 이메일 추출
+    public String getUserEmailFromToken(String token) {
         Key key = new SecretKeySpec(jwt_secret.getBytes(), SignatureAlgorithm.HS512.getJcaName());
 
         Claims claims = Jwts.parserBuilder()
@@ -61,5 +65,14 @@ public class JwtTokenProvider {
             System.out.println("유효하지 않은 JWT 토큰: " + e.getMessage());
         }
         return false;
+    }
+
+    // request에서 token 추출
+    public String resolveToken(HttpServletRequest request) {
+        String bearerToken = request.getHeader("Authorization");
+        if (bearerToken != null && bearerToken.startsWith("Bearer ")) {
+            return bearerToken.substring(7);
+        }
+        return null;
     }
 }
