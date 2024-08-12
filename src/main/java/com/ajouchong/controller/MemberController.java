@@ -8,6 +8,7 @@ import com.ajouchong.exception.DuplicateEmailException;
 import com.ajouchong.jwt.JwtAuthenticationResponse;
 import com.ajouchong.jwt.JwtTokenProvider;
 import com.ajouchong.service.MemberService;
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -58,6 +59,11 @@ public class MemberController {
             return new ApiResponse<>(0, "로그인 실패: 이메일 또는 비밀번호가 올바르지 않습니다.", null);
         }
 
+    }
+
+    @PostMapping("/logout")
+    public ApiResponse<String> logout(HttpServletRequest request){
+        return new ApiResponse<>(1, "로그아웃에 성공했습니다.", null);
     }
 
 }
