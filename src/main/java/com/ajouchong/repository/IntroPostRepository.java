@@ -3,9 +3,11 @@ package com.ajouchong.repository;
 import com.ajouchong.entity.IntroPost;
 import com.ajouchong.entity.IntroPostPageName;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 
-import java.util.List;
+import java.util.Optional;
 
+@Repository
 public interface IntroPostRepository extends JpaRepository<IntroPost, Long> {
-    List<IntroPost> findByPage(IntroPostPageName page);
+    Optional<IntroPost> findByPage(IntroPostPageName page);
 }
