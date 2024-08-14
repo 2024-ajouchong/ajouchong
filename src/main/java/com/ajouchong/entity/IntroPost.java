@@ -6,12 +6,13 @@ import lombok.Setter;
 
 @Entity
 @Getter @Setter
-public class NoticePost {
+public class IntroPost {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String page;
+    @Enumerated(EnumType.STRING)
+    private IntroPostPageName page;
 
     private String imageUrl;
 
