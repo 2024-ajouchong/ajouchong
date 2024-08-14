@@ -22,7 +22,7 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/auth")
-public class MemberController {
+public class MemberUserController {
 
     private final MemberService memberService;
     private final AuthenticationManager authenticationManager;
