@@ -3,6 +3,7 @@ package com.ajouchong.service;
 import com.ajouchong.entity.IntroPost;
 import com.ajouchong.entity.IntroPostPageName;
 import com.ajouchong.repository.IntroPostRepository;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -15,11 +16,22 @@ import java.util.Optional;
 public class IntroPostService {
     private final IntroPostRepository introPostRepository;
 
+    @Transactional
     public IntroPost uploadImage(IntroPostPageName page, String imageUrl) {
-        IntroPost post = new IntroPost();
-        post.setPage(page);
-        post.setImageUrl(imageUrl);
-        post.setCreatedAt(LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")));
+        Optional<IntroPost> existingPostOpt = introPostRepository.findByPage(page);
+
+        IntroPost post;
+        if (existingPostOpt.isPresent()) {
+            post = existingPostOpt.get();
+            post.setImageUrl(imageUrl);
+            post.setCreatedAt(LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")));
+        } else {
+            post = new IntroPost();
+            post.setPage(page);
+            post.setImageUrl(imageUrl);
+            post.setCreatedAt(LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")));
+        }
+
         return introPostRepository.save(post);
     }
 
