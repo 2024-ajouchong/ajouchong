@@ -2,6 +2,7 @@ package com.ajouchong.controller;
 
 import com.ajouchong.common.ApiResponse;
 import com.ajouchong.dto.AddMemberRequestDto;
+import com.ajouchong.dto.ChangePasswordRequestDto;
 import com.ajouchong.dto.LoginRequestDto;
 import com.ajouchong.entity.Member;
 import com.ajouchong.exception.DuplicateEmailException;
@@ -15,10 +16,7 @@ import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RequiredArgsConstructor
 @RestController
@@ -64,6 +62,19 @@ public class MemberController {
     @PostMapping("/logout")
     public ApiResponse<String> logout(HttpServletRequest request){
         return new ApiResponse<>(1, "로그아웃에 성공했습니다.", null);
+    }
+
+    @PatchMapping("/changePw")
+    public ApiResponse<String> changePassword(@RequestHeader("Authorization") String token,
+                                              @RequestBody ChangePasswordRequestDto requestDto) {
+
+        String jwt = token.substring(7);
+        String email = jwtTokenProvider.getUsernameFromJWT(jwt);
+
+        Member member = memberService.findByEmail(email);
+        memberService.changePassword(member, requestDto.getOldPassword(), requestDto.getNewPassword());
+
+        return new ApiResponse<>(1, "비밀번호가 성공적으로 변경되었습니다.", null);
     }
 
 }
