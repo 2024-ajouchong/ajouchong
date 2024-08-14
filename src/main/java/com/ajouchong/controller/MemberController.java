@@ -18,6 +18,8 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Optional;
+
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/auth")
@@ -64,6 +66,34 @@ public class MemberController {
         return new ApiResponse<>(1, "로그아웃에 성공했습니다.", null);
     }
 
+    @GetMapping("/profile")
+    public ApiResponse<Member> getMyProfile(HttpServletRequest request) {
+        String token = jwtTokenProvider.resolveToken(request);
+        System.out.println("token: " + token);
+
+        if (token == null) {
+            System.out.println("No token found in request.");
+            return new ApiResponse<>(0, "토큰이 없습니다.", null);
+        }
+
+        if (!jwtTokenProvider.validateToken(token)) {
+            System.out.println("Invalid token: " + token);
+            return new ApiResponse<>(0, "유효하지 않은 토큰입니다.", null);
+        }
+
+        String email = jwtTokenProvider.getUserEmailFromToken(token);
+        System.out.println(email);
+
+        try {
+            Optional<Member> memberOptional = memberService.findByEmail(email);
+
+            return memberOptional.map(member -> new ApiResponse<>(1, "회원 정보를 성공적으로 조회했습니다.", member)).orElseGet(() -> new ApiResponse<>(0, "회원 정보를 찾을 수 없습니다.", null));
+        } catch (Exception e) {
+            System.out.println("Error retrieving member information: " + e.getMessage());
+            return new ApiResponse<>(0, "회원 정보 조회 중 오류가 발생했습니다.", null);
+        }
+    }
+    
     @PatchMapping("/changePw")
     public ApiResponse<String> changePassword(@RequestHeader("Authorization") String token,
                                               @RequestBody ChangePasswordRequestDto requestDto) {
@@ -75,6 +105,4 @@ public class MemberController {
         memberService.changePassword(member, requestDto.getOldPassword(), requestDto.getNewPassword());
 
         return new ApiResponse<>(1, "비밀번호가 성공적으로 변경되었습니다.", null);
-    }
-
 }

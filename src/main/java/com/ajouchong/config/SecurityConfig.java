@@ -31,13 +31,12 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         JwtAuthenticationFilter jwtAuthenticationFilter = new JwtAuthenticationFilter(jwtTokenProvider, memberDetailService, authenticationManager(http.getSharedObject(AuthenticationConfiguration.class)));
-        jwtAuthenticationFilter.setFilterProcessesUrl("/login");
 
         http
                 .csrf(AbstractHttpConfigurer::disable) // CSRF 비활성화
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("auth/login", "/auth/signup", "auth/changePw").permitAll() // 모든 요청 허용 API
+                        .requestMatchers("auth/login", "/auth/signup", "auth/changePw", "/auth/profile").permitAll() // 모든 요청 허용 API
                         .anyRequest().authenticated() // 그 외의 요청은 인증 필요
                 )
                 .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
