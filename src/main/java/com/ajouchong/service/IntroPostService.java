@@ -23,14 +23,12 @@ public class IntroPostService {
         IntroPost post;
         if (existingPostOpt.isPresent()) {
             post = existingPostOpt.get();
-            post.setImageUrl(imageUrl);
-            post.setCreatedAt(LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")));
         } else {
             post = new IntroPost();
             post.setPage(page);
-            post.setImageUrl(imageUrl);
-            post.setCreatedAt(LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")));
         }
+        post.setImageUrl(imageUrl);
+        post.setCreatedAt(LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")));
 
         return introPostRepository.save(post);
     }
