@@ -1,4 +1,4 @@
-package com.ajouchong.controller;
+package com.ajouchong.controller.user;
 
 import com.ajouchong.common.ApiResponse;
 import com.ajouchong.dto.AddMemberRequestDto;
