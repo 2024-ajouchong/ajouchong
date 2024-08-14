@@ -91,4 +91,9 @@ public class Member implements UserDetails { // UserDetails를 상속받아 인�
     public boolean isEnabled(){
         return true; // true -> 사용 가능
     }
+
+    // 새로운 비밀번호로 업데이트
+    public void updatePassword(String newPassword) {
+        this.password = newPassword;
+    }
 }
