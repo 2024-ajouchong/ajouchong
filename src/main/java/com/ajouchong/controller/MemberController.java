@@ -16,9 +16,8 @@ import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.Optional;
 
 @RequiredArgsConstructor
 @RestController
@@ -55,14 +54,14 @@ public class MemberController {
             JwtAuthenticationResponse jwtResponse = new JwtAuthenticationResponse(jwt);
 
             return new ApiResponse<>(1, "로그인에 성공했습니다.", jwtResponse);
-        }catch (BadCredentialsException e) {
+        } catch (BadCredentialsException e) {
             return new ApiResponse<>(0, "로그인 실패: 이메일 또는 비밀번호가 올바르지 않습니다.", null);
         }
 
     }
 
     @PostMapping("/logout")
-    public ApiResponse<String> logout(HttpServletRequest request){
+    public ApiResponse<String> logout(HttpServletRequest request) {
         return new ApiResponse<>(1, "로그아웃에 성공했습니다.", null);
     }
 
@@ -85,24 +84,27 @@ public class MemberController {
         System.out.println(email);
 
         try {
-            Optional<Member> memberOptional = memberService.findByEmail(email);
-
-            return memberOptional.map(member -> new ApiResponse<>(1, "회원 정보를 성공적으로 조회했습니다.", member)).orElseGet(() -> new ApiResponse<>(0, "회원 정보를 찾을 수 없습니다.", null));
+            Member member = memberService.findByEmail(email);
+            return new ApiResponse<>(1, "회원 정보를 성공적으로 조회했습니다.", member);
+        } catch (UsernameNotFoundException e) {
+            System.out.println("Error retrieving member information: " + e.getMessage());
+            return new ApiResponse<>(0, "회원 정보를 찾을 수 없습니다.", null);
         } catch (Exception e) {
             System.out.println("Error retrieving member information: " + e.getMessage());
             return new ApiResponse<>(0, "회원 정보 조회 중 오류가 발생했습니다.", null);
         }
     }
-    
+
     @PatchMapping("/changePw")
     public ApiResponse<String> changePassword(@RequestHeader("Authorization") String token,
                                               @RequestBody ChangePasswordRequestDto requestDto) {
 
         String jwt = token.substring(7);
-        String email = jwtTokenProvider.getUsernameFromJWT(jwt);
+        String email = jwtTokenProvider.getUserEmailFromToken(jwt);
 
         Member member = memberService.findByEmail(email);
         memberService.changePassword(member, requestDto.getOldPassword(), requestDto.getNewPassword());
 
-        return new ApiResponse<>(1, "비밀번호가 성공적으로 변경되었습니다.", null);
+        return new ApiResponse<>(1, "비밀번호 변경이 완료되었습니다.", null);
+    }
 }
