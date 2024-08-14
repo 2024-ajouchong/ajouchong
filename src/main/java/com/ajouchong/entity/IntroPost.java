@@ -10,7 +10,7 @@ import lombok.Setter;
 public class IntroPost {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Long intro_postId;
 
     @Enumerated(EnumType.STRING)
     private IntroPostPageName page;
