@@ -43,4 +43,8 @@ public class MemberService {
         memberRepository.save(member);
     }
 
+    public Member findByEmail(String email) {
+        return memberRepository.findByEmail(email)
+                .orElseThrow(() -> new UsernameNotFoundException("해당 이메일의 사용자를 찾을 수 없습니다."));
+    }
 }
