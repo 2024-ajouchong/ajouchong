@@ -34,7 +34,7 @@ public class IntroPostUserController {
         }
     }
 
-    @GetMapping("/map")
+    @GetMapping("/information")
     public ApiResponse<Admin> getAdminInfo() {
         Optional<Admin> admin = adminService.getAdminContactInfo();
 
