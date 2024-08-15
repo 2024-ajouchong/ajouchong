@@ -1,24 +1,42 @@
 package com.ajouchong.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
+import lombok.Setter;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 
 @Entity
+@RequiredArgsConstructor
+@Getter @Setter
 public class NoticePost {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long nPost_id;
+    private Long nPostId;
 
-    private String np_title;
-    private String np_content;
-    private int np_userLike_cnt;
-    private Long user_id;
-    private Date np_createTime;
-    private Date np_updateTime;
-    private int np_hit_cnt;
-    private boolean np_isReplied;
+    private String npTitle;
+    private String npContent;
+    private int npUserLikeCnt = 0;
+    private int npHitCnt = 0;
+    private boolean npIsReplied = false;
+
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private Member member;
+
+    private LocalDateTime npCreateTime;
+    private LocalDateTime npUpdateTime;
+
+    @PrePersist
+    protected void onCreate() {
+        this.npCreateTime = LocalDateTime.now();
+        this.npUpdateTime = LocalDateTime.now();
+    }
+
+    @PreUpdate
+    protected void onUpdate() {
+        this.npUpdateTime = LocalDateTime.now();
+    }
+
 }
