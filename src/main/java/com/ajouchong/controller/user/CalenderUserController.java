@@ -31,6 +31,7 @@ public class CalenderUserController {
     private EventRequestDto convertToDto(Event event) {
         EventRequestDto eventRequestDto = new EventRequestDto();
 
+        eventRequestDto.setEventId(event.getId());
         eventRequestDto.setTitle(event.getTitle());
         eventRequestDto.setDate(event.getDate().toString());
 

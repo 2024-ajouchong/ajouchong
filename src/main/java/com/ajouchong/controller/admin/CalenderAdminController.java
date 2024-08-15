@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import java.time.LocalDate;
 
 @RestController
-@RequestMapping("/notice/calendar")
+@RequestMapping("/notice/calender")
 public class CalenderAdminController {
     private final EventService eventService;
 
@@ -36,6 +36,7 @@ public class CalenderAdminController {
     private Event convertToEntity(EventRequestDto eventRequestDto) {
         Event event = new Event();
 
+        eventRequestDto.setEventId(event.getId());
         event.setTitle(eventRequestDto.getTitle());
         event.setDate(LocalDate.parse(eventRequestDto.getDate()));
 
@@ -45,6 +46,7 @@ public class CalenderAdminController {
     private EventRequestDto convertToDto(Event event) {
         EventRequestDto eventRequestDto = new EventRequestDto();
 
+        eventRequestDto.setEventId(event.getId());
         eventRequestDto.setTitle(event.getTitle());
         eventRequestDto.setDate(event.getDate().toString());
 
