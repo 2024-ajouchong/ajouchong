@@ -30,7 +30,7 @@ public class IntroPostAdminController {
         }
     }
 
-    @PostMapping("/map")
+    @PostMapping("/information")
     public ApiResponse<Admin> uploadAdminInfo(@RequestBody Admin adminInfo) {
         Admin admin = adminService.saveAdminContactInfo(adminInfo);
         return new ApiResponse<>(1, "관리자 정보 업로드 완료", admin);
