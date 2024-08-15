@@ -6,6 +6,8 @@ import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @RequiredArgsConstructor
@@ -17,13 +19,16 @@ public class NoticePost {
 
     private String npTitle;
     private String npContent;
+
+    @OneToMany(mappedBy = "noticePost", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<NoticePostImage> images = new ArrayList<>();
+
     private int npUserLikeCnt = 0;
     private int npHitCnt = 0;
-    private boolean npIsReplied = false;
 
     @ManyToOne
     @JoinColumn(name = "user_id")
-    private Member member;
+    private Member author;
 
     private LocalDateTime npCreateTime;
     private LocalDateTime npUpdateTime;
