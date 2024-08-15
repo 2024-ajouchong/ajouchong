@@ -1,8 +1,10 @@
 package com.ajouchong.controller.admin;
 
 import com.ajouchong.common.ApiResponse;
+import com.ajouchong.entity.Admin;
 import com.ajouchong.entity.IntroPost;
 import com.ajouchong.entity.IntroPostPageName;
+import com.ajouchong.service.AdminService;
 import com.ajouchong.service.IntroPostService;
 import org.springframework.web.bind.annotation.*;
 
@@ -10,9 +12,11 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/about/upload")
 public class IntroPostAdminController {
     private final IntroPostService introPostService;
+    private final AdminService adminService;
 
-    public IntroPostAdminController(IntroPostService introPostService) {
+    public IntroPostAdminController(IntroPostService introPostService, AdminService adminService) {
         this.introPostService = introPostService;
+        this.adminService = adminService;
     }
 
     @PostMapping("/{page}")
@@ -24,5 +28,11 @@ public class IntroPostAdminController {
         } catch (IllegalArgumentException e) {
             return new ApiResponse<>(0, "유효하지 않은 페이지 이름입니다: " + pageName, null);
         }
+    }
+
+    @PostMapping("/map")
+    public ApiResponse<Admin> uploadAdminInfo(@RequestBody Admin adminInfo) {
+        Admin admin = adminService.saveAdminContactInfo(adminInfo);
+        return new ApiResponse<>(1, "관리자 정보 업로드 완료", admin);
     }
 }
