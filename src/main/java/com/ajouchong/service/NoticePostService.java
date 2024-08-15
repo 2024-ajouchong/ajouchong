@@ -89,6 +89,22 @@ public class NoticePostService {
         noticePostRepository.deleteById(id);
     }
 
+    @Transactional
+    public void increaseLikeCount(Long id) {
+        NoticePost noticePost = noticePostRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException(id + "번 게시글을 찾을 수 없습니다."));
+        noticePost.setNpUserLikeCnt(noticePost.getNpUserLikeCnt() + 1);
+        noticePostRepository.save(noticePost);
+    }
+
+    @Transactional
+    public void increaseHitCount(Long id) {
+        NoticePost noticePost = noticePostRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException(id + "번 게시글을 찾을 수 없습니다."));
+        noticePost.setNpHitCnt(noticePost.getNpHitCnt() + 1);
+        noticePostRepository.save(noticePost);
+    }
+
     private NoticePostResponseDto convertToDto(NoticePost noticePost) {
         List<String> imageUrls = noticePost.getImages().stream()
                 .map(NoticePostImage::getImageUrl)
