@@ -23,6 +23,9 @@ public class RulePost {
     @Enumerated(EnumType.STRING)
     private RuleType type; // 회칙 or 세칙 구분
 
+    private int rpUserLikeCnt = 0;
+    private int rpHitCnt = 0;
+
     private LocalDateTime rpCreateTime;
     private LocalDateTime rpUpdateTime;
 
