@@ -39,5 +39,14 @@ public class RulePost {
     protected void onUpdate() {
         this.rpUpdateTime = LocalDateTime.now();
     }
+
+    public void incrementHitCount() {
+        this.rpHitCnt++;
+    }
+
+    // 좋아요 수 증가
+    public void incrementUserLikeCount() {
+        this.rpUserLikeCnt++;
+    }
 }
 
