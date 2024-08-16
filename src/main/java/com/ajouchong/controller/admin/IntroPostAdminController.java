@@ -1,6 +1,7 @@
 package com.ajouchong.controller.admin;
 
 import com.ajouchong.common.ApiResponse;
+import com.ajouchong.dto.AdminInfoRequestDto;
 import com.ajouchong.entity.Admin;
 import com.ajouchong.entity.IntroPost;
 import com.ajouchong.entity.IntroPostPageName;
@@ -31,7 +32,7 @@ public class IntroPostAdminController {
     }
 
     @PostMapping("/information")
-    public ApiResponse<Admin> uploadAdminInfo(@RequestBody Admin adminInfo) {
+    public ApiResponse<Admin> uploadAdminInfo(@RequestBody AdminInfoRequestDto adminInfo) {
         Admin admin = adminService.saveAdminContactInfo(adminInfo);
         return new ApiResponse<>(1, "관리자 정보 업로드 완료", admin);
     }

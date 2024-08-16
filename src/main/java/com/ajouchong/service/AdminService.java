@@ -1,5 +1,6 @@
 package com.ajouchong.service;
 
+import com.ajouchong.dto.AdminInfoRequestDto;
 import com.ajouchong.entity.Admin;
 import com.ajouchong.repository.AdminRepository;
 import lombok.RequiredArgsConstructor;
@@ -13,14 +14,21 @@ import java.util.Optional;
 public class AdminService {
     private final AdminRepository adminRepository;
 
-    public Admin saveAdminContactInfo(Admin contactInfo) {
+    public Admin saveAdminContactInfo(AdminInfoRequestDto contactInfo) {
         List<Admin> existingAdmins = adminRepository.findAll();
 
         if (!existingAdmins.isEmpty()) {
             adminRepository.deleteAll();
         }
 
-        return adminRepository.save(contactInfo);
+        Admin admin = Admin.builder()
+                .admin_name(contactInfo.getAdmin_name())
+                .phone(contactInfo.getPhone())
+                .address(contactInfo.getAddress())
+                .time(contactInfo.getTime())
+                .build();
+
+        return adminRepository.save(admin);
     }
 
     public Optional<Admin> getAdminContactInfo() {
