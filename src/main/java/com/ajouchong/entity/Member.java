@@ -1,5 +1,6 @@
 package com.ajouchong.entity;
 
+import com.ajouchong.entity.enumClass.MemberRole;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Builder;
