@@ -4,7 +4,7 @@ import com.ajouchong.common.ApiResponse;
 import com.ajouchong.dto.AdminInfoRequestDto;
 import com.ajouchong.entity.Admin;
 import com.ajouchong.entity.IntroPost;
-import com.ajouchong.entity.IntroPostPageName;
+import com.ajouchong.entity.enumClass.IntroPostPageName;
 import com.ajouchong.service.AdminService;
 import com.ajouchong.service.IntroPostService;
 import org.springframework.web.bind.annotation.*;

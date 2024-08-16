@@ -1,4 +1,4 @@
-package com.ajouchong.entity;
+package com.ajouchong.entity.enumClass;
 
 import lombok.Getter;
 
