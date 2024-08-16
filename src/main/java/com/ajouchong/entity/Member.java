@@ -8,10 +8,10 @@ import lombok.NoArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-@Table(name = "member")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
 @Entity
@@ -24,6 +24,9 @@ public class Member implements UserDetails { // UserDetails를 상속받아 인�
 
     @Column(name = "name", nullable = false)
     private String name;
+
+    @OneToMany(mappedBy = "author")
+    private List<NoticePost> noticePosts = new ArrayList<>();
 
     @Column(name = "email", nullable = false, unique = true)
     private String email;
