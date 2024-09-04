@@ -1,2 +1,9 @@
-package com.ajouchong.controller.user;public class QnaPostController {
+package com.ajouchong.controller.user;
+
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+@RestController
+@RequestMapping("/qna")
+public class QnaPostController {
 }
