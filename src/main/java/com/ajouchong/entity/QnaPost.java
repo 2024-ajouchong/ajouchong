@@ -26,6 +26,9 @@ public class QnaPost {
     private LocalDateTime rpCreateTime;
     private LocalDateTime rpUpdateTime;
 
+    @OneToOne(mappedBy = "qnaPost", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Answer answer;
+
     @PrePersist
     protected void onCreate() {
         this.rpCreateTime = LocalDateTime.now();
@@ -43,5 +46,10 @@ public class QnaPost {
 
     public void incrementUserLikeCount() {
         this.qpUserLikeCnt++;
+    }
+
+    public void setAnswer(Answer answer) {
+        this.answer = answer;
+        this.isReplied = true;
     }
 }
