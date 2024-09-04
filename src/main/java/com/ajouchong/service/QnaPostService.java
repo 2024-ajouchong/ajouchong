@@ -7,6 +7,7 @@ import com.ajouchong.repository.QnaPostRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -30,6 +31,11 @@ public class QnaPostService {
     @Transactional(readOnly = true)
     public Optional<QnaPost> getPostById(Long postId) {
         return qnaPostRepository.findById(postId);
+    }
+
+    @Transactional(readOnly = true)
+    public List<QnaPost> getAllPosts() {
+        return qnaPostRepository.findAll();
     }
 
     @Transactional
