@@ -1,6 +1,5 @@
 package com.ajouchong.dto;
 
-import com.ajouchong.entity.QnaPost;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -16,15 +15,14 @@ public class QnaPostResponseDto {
     private int qpHitCnt;
     private LocalDateTime qpCreateTime;
     private LocalDateTime qpUpdateTime;
+    private AnswerDto answer;
 
-    public QnaPostResponseDto(QnaPost qnaPost) {
-        this.qPostId = qnaPost.getQPostId();
-        this.qpTitle = qnaPost.getQpTitle();
-        this.qpContent = qnaPost.getQpContent();
-        this.isReplied = qnaPost.isReplied();
-        this.qpUserLikeCnt = qnaPost.getQpUserLikeCnt();
-        this.qpHitCnt = qnaPost.getQpHitCnt();
-        this.qpCreateTime = LocalDateTime.now();
-        this.qpUpdateTime = LocalDateTime.now();
+    @Getter
+    @Setter
+    public static class AnswerDto {
+        private Long answerId;
+        private String content;
+        private LocalDateTime createTime;
+        private LocalDateTime updateTime;
     }
 }
