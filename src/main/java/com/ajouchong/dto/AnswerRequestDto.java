@@ -5,6 +5,5 @@ import lombok.Setter;
 
 @Getter @Setter
 public class AnswerRequestDto {
-    private Long qPostId;
     private String content;
 }
