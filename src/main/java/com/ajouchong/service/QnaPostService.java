@@ -1,5 +1,7 @@
 package com.ajouchong.service;
 
+import com.ajouchong.dto.AnswerRequestDto;
+import com.ajouchong.dto.AnswerResponseDto;
 import com.ajouchong.dto.QnaPostRequestDto;
 import com.ajouchong.dto.QnaPostResponseDto;
 import com.ajouchong.entity.Answer;
@@ -75,53 +77,43 @@ public class QnaPostService {
     }
 
     @Transactional
-    public QnaPost addAnswer(Long postId, String answerContent) {
+    public AnswerResponseDto addAnswer(Long postId, AnswerRequestDto requestDto) {
         QnaPost post = qnaPostRepository.findById(postId)
                 .orElseThrow(() -> new IllegalArgumentException(postId + "번 게시글을 찾을 수 없습니다."));
 
-        if (post.isReplied()) {
-            throw new IllegalStateException("이미 답변이 존재합니다.");
+        Answer answer = post.getAnswer();
+
+        if (answer != null) {
+            answer.setContent(requestDto.getContent());
+            answer.setUpdateTime(LocalDateTime.now());
+        } else {
+            answer = new Answer();
+            answer.setContent(requestDto.getContent());
+            answer.setQnaPost(post);
+            answer.setCreateTime(LocalDateTime.now());
+            answer.setUpdateTime(LocalDateTime.now());
+            post.setAnswer(answer);
+            post.setReplied(true);
+
         }
 
-        Answer answer = new Answer();
-        answer.setContent(answerContent);
-        answer.setQnaPost(post);
+        qnaPostRepository.save(post);
 
-        post.setAnswer(answer);
-
-        return qnaPostRepository.save(post);
+        return new AnswerResponseDto(answer);
     }
 
     @Transactional
-    public QnaPost changeAnswer(Long postId, String updatedAnswerContent) {
-        Optional<QnaPost> postOptional = qnaPostRepository.findById(postId);
-        if (postOptional.isPresent()) {
-            QnaPost post = postOptional.get();
-            if (post.getAnswer() != null) {
-                post.getAnswer().setContent(updatedAnswerContent);
-                return qnaPostRepository.save(post);
-            } else {
-                throw new IllegalArgumentException("해당 게시글에 답변이 없습니다.");
-            }
-        } else {
-            throw new IllegalArgumentException(postId + "번 게시글을 찾을 수 없습니다.");
-        }
-    }
+    public QnaPostResponseDto deleteAnswer(Long postId) {
+        QnaPost post = qnaPostRepository.findById(postId)
+                .orElseThrow(() -> new IllegalArgumentException("게시글을 찾을 수 없습니다."));
 
-    @Transactional
-    public QnaPost deleteAnswer(Long postId) {
-        Optional<QnaPost> postOptional = qnaPostRepository.findById(postId);
-        if (postOptional.isPresent()) {
-            QnaPost post = postOptional.get();
-            if (post.getAnswer() != null) {
-                post.setAnswer(null);
-                post.setReplied(false);
-                return qnaPostRepository.save(post);
-            } else {
-                throw new IllegalArgumentException("해당 게시글에 답변이 없습니다.");
-            }
+        if (post.getAnswer() != null) {
+            post.setAnswer(null);
+            post.setReplied(false);
+            QnaPost updatedPost = qnaPostRepository.save(post);
+            return new QnaPostResponseDto(updatedPost);
         } else {
-            throw new IllegalArgumentException("게시글을 찾을 수 없습니다.");
+            throw new IllegalArgumentException("해당 게시글에 답변이 없습니다.");
         }
     }
 }
