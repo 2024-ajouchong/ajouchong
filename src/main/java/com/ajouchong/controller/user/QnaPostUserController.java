@@ -12,10 +12,10 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/qna")
-public class QnaPostController {
+public class QnaPostUserController {
     private final QnaPostService qnaPostService;
 
-    public QnaPostController(QnaPostService qnaPostService) {
+    public QnaPostUserController(QnaPostService qnaPostService) {
         this.qnaPostService = qnaPostService;
     }
 
