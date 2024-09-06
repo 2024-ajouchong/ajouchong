@@ -1,6 +1,8 @@
 package com.ajouchong.controller.user;
 
 import com.ajouchong.common.ApiResponse;
+import com.ajouchong.dto.QnaPostRequestDto;
+import com.ajouchong.dto.QnaPostResponseDto;
 import com.ajouchong.entity.QnaPost;
 import com.ajouchong.service.QnaPostService;
 import org.springframework.web.bind.annotation.*;
@@ -17,13 +19,13 @@ public class QnaPostController {
         this.qnaPostService = qnaPostService;
     }
 
-    @PostMapping()
-    public ApiResponse<QnaPost> createPost(@RequestParam String title, @RequestParam String content) {
-        QnaPost post = qnaPostService.createPost(title, content);
-        return new ApiResponse<>(1, "게시글이 게시되었습니다.", post);
+    @PostMapping
+    public ApiResponse<QnaPostResponseDto> createPost(@RequestBody QnaPostRequestDto requestDto) {
+        QnaPostResponseDto responseDto = qnaPostService.createPost(requestDto);
+        return new ApiResponse<>(1, "게시글이 게시되었습니다.", responseDto);
     }
 
-    @GetMapping()
+    @GetMapping
     public ApiResponse<List<QnaPost>> getAllPosts() {
         List<QnaPost> allPosts = qnaPostService.getAllPosts();
         return new ApiResponse<>(1, "전체 게시글 목록 조회 성공", allPosts);
@@ -32,7 +34,6 @@ public class QnaPostController {
     @GetMapping("{postId}")
     public ApiResponse<Optional<QnaPost>> getPostById(@PathVariable Long postId) {
         Optional<QnaPost> post = qnaPostService.getPostById(postId);
-        qnaPostService.incrementHitCount(postId);
         if (post.isPresent()) {
             qnaPostService.incrementHitCount(postId);
             return new ApiResponse<>(1, postId + "번 게시글 조회 성공", post);

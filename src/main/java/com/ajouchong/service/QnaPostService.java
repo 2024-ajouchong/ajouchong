@@ -25,7 +25,6 @@ public class QnaPostService {
     public QnaPostResponseDto createPost(QnaPostRequestDto requestDto) {
         QnaPost post = new QnaPost();
 
-        System.out.println(requestDto.getQpTitle());
         post.setQpTitle(requestDto.getQpTitle());
         post.setQpContent(requestDto.getQpContent());
 
@@ -33,7 +32,6 @@ public class QnaPostService {
         post.setQpHitCnt(0);
         post.setQpUpdateTime(LocalDateTime.now());
         post.setQpCreateTime(LocalDateTime.now());
-
 
         qnaPostRepository.save(post);
 
