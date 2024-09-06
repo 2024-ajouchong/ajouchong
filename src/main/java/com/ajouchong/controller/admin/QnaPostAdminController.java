@@ -1,7 +1,9 @@
 package com.ajouchong.controller.admin;
 
 import com.ajouchong.common.ApiResponse;
-import com.ajouchong.entity.QnaPost;
+import com.ajouchong.dto.AnswerRequestDto;
+import com.ajouchong.dto.AnswerResponseDto;
+import com.ajouchong.dto.QnaPostResponseDto;
 import com.ajouchong.service.QnaPostService;
 import org.springframework.web.bind.annotation.*;
 
@@ -15,21 +17,16 @@ public class QnaPostAdminController {
     }
 
     @PostMapping("/{postId}/answer")
-    public ApiResponse<QnaPost> addAnswer(@PathVariable Long postId, @RequestParam String answerContent) {
-        QnaPost updatedPost = qnaPostService.addAnswer(postId, answerContent);
-        return new ApiResponse<>(1, "답변이 게시되었습니다.", updatedPost);
-    }
-
-    @PutMapping("/{postId}/answer")
-    public ApiResponse<QnaPost> changeAnswer(@PathVariable Long postId, @RequestParam String updatedAnswerContent) {
-        QnaPost updatedPost = qnaPostService.changeAnswer(postId, updatedAnswerContent);
-        return new ApiResponse<>(1, "답변이 수정되었습니다.", updatedPost);
+    public ApiResponse<AnswerResponseDto> addAnswer(@PathVariable Long postId, @RequestBody AnswerRequestDto requestDto) {
+        System.out.println(requestDto.getContent());
+        AnswerResponseDto response = qnaPostService.addAnswer(postId, requestDto);
+        return new ApiResponse<>(1, "답변이 게시/변경 되었습니다.", response);
     }
 
     @DeleteMapping("/{postId}/answer")
-    public ApiResponse<QnaPost> deleteAnswer(@PathVariable Long postId) {
-        QnaPost updatedPost = qnaPostService.deleteAnswer(postId);
-        return new ApiResponse<>(1, "답변이 삭제되었습니다.", updatedPost);
+    public ApiResponse<QnaPostResponseDto> deleteAnswer(@PathVariable Long postId) {
+        QnaPostResponseDto response = qnaPostService.deleteAnswer(postId);
+        return new ApiResponse<>(1, "답변이 삭제되었습니다.", response);
     }
 
     @DeleteMapping("/{postId}")
