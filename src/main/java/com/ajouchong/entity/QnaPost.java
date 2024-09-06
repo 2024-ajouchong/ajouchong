@@ -23,21 +23,21 @@ public class QnaPost {
     private int qpUserLikeCnt = 0;
     private int qpHitCnt = 0;
 
-    private LocalDateTime rpCreateTime;
-    private LocalDateTime rpUpdateTime;
+    private LocalDateTime qpCreateTime;
+    private LocalDateTime qpUpdateTime;
 
     @OneToOne(mappedBy = "qnaPost", cascade = CascadeType.ALL, orphanRemoval = true)
     private Answer answer;
 
     @PrePersist
     protected void onCreate() {
-        this.rpCreateTime = LocalDateTime.now();
-        this.rpUpdateTime = LocalDateTime.now();
+        this.qpCreateTime = LocalDateTime.now();
+        this.qpUpdateTime = LocalDateTime.now();
     }
 
     @PreUpdate
     protected void onUpdate() {
-        this.rpUpdateTime = LocalDateTime.now();
+        this.qpUpdateTime = LocalDateTime.now();
     }
 
     public void incrementHitCount() {
