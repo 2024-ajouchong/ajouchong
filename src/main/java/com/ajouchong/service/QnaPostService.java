@@ -1,5 +1,7 @@
 package com.ajouchong.service;
 
+import com.ajouchong.dto.QnaPostRequestDto;
+import com.ajouchong.dto.QnaPostResponseDto;
 import com.ajouchong.entity.Answer;
 import com.ajouchong.entity.QnaPost;
 import com.ajouchong.repository.AnswerRepository;
@@ -7,25 +9,35 @@ import com.ajouchong.repository.QnaPostRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
 @Service
 public class QnaPostService {
     private final QnaPostRepository qnaPostRepository;
-    private final AnswerRepository answerRepository;
 
     public QnaPostService(QnaPostRepository qnaPostRepository, AnswerRepository answerRepository) {
         this.qnaPostRepository = qnaPostRepository;
-        this.answerRepository = answerRepository;
     }
 
     @Transactional
-    public QnaPost createPost(String title, String content) {
+    public QnaPostResponseDto createPost(QnaPostRequestDto requestDto) {
         QnaPost post = new QnaPost();
-        post.setQpTitle(title);
-        post.setQpContent(content);
-        return qnaPostRepository.save(post);
+
+        System.out.println(requestDto.getQpTitle());
+        post.setQpTitle(requestDto.getQpTitle());
+        post.setQpContent(requestDto.getQpContent());
+
+        post.setQpUserLikeCnt(0);
+        post.setQpHitCnt(0);
+        post.setQpUpdateTime(LocalDateTime.now());
+        post.setQpCreateTime(LocalDateTime.now());
+
+
+        qnaPostRepository.save(post);
+
+        return new QnaPostResponseDto(post);
     }
 
     @Transactional(readOnly = true)
