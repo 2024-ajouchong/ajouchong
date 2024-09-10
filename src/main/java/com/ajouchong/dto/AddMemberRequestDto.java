@@ -1,6 +1,6 @@
 package com.ajouchong.dto;
 
-import com.ajouchong.entity.MemberRole;
+import com.ajouchong.entity.enumClass.MemberRole;
 import lombok.Data;
 
 @Data

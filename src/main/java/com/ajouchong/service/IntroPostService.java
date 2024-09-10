@@ -1,7 +1,7 @@
 package com.ajouchong.service;
 
 import com.ajouchong.entity.IntroPost;
-import com.ajouchong.entity.IntroPostPageName;
+import com.ajouchong.entity.enumClass.IntroPostPageName;
 import com.ajouchong.repository.IntroPostRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;

@@ -1,5 +1,6 @@
 package com.ajouchong.entity;
 
+import com.ajouchong.entity.enumClass.IntroPostPageName;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
