@@ -37,5 +37,5 @@ out/
 .vscode/
 
 #propertise
-src/main/resources/application-prod.yml
-src/main/resources/secure.properties
+application-prod.yml
+secure.properties
