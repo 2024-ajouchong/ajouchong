@@ -1,7 +1,7 @@
 package com.ajouchong.service;
 
-import com.ajouchong.dto.RulePostRequestDto;
-import com.ajouchong.dto.RulePostResponseDto;
+import com.ajouchong.dto.request.RulePostRequestDto;
+import com.ajouchong.dto.response.RulePostResponseDto;
 import com.ajouchong.entity.RulePost;
 import com.ajouchong.entity.enumClass.RuleType;
 import com.ajouchong.repository.RulePostRepository;

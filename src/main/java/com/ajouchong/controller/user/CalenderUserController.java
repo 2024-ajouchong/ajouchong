@@ -1,7 +1,7 @@
 package com.ajouchong.controller.user;
 
 import com.ajouchong.common.ApiResponse;
-import com.ajouchong.dto.EventRequestDto;
+import com.ajouchong.dto.request.EventRequestDto;
 import com.ajouchong.entity.Event;
 import com.ajouchong.service.EventService;
 import org.springframework.web.bind.annotation.GetMapping;

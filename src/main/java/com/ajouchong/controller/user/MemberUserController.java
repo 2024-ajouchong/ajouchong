@@ -1,9 +1,9 @@
 package com.ajouchong.controller.user;
 
 import com.ajouchong.common.ApiResponse;
-import com.ajouchong.dto.AddMemberRequestDto;
-import com.ajouchong.dto.ChangePasswordRequestDto;
-import com.ajouchong.dto.LoginRequestDto;
+import com.ajouchong.dto.request.AddMemberRequestDto;
+import com.ajouchong.dto.request.ChangePasswordRequestDto;
+import com.ajouchong.dto.request.LoginRequestDto;
 import com.ajouchong.entity.Member;
 import com.ajouchong.exception.DuplicateEmailException;
 import com.ajouchong.jwt.JwtAuthenticationResponse;

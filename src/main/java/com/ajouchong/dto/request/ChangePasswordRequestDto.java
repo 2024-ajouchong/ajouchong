@@ -1,4 +1,4 @@
-package com.ajouchong.dto;
+package com.ajouchong.dto.request;
 
 import lombok.Getter;
 

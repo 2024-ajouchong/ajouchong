@@ -1,8 +1,8 @@
 package com.ajouchong.controller.admin;
 
 import com.ajouchong.common.ApiResponse;
-import com.ajouchong.dto.RulePostRequestDto;
-import com.ajouchong.dto.RulePostResponseDto;
+import com.ajouchong.dto.request.RulePostRequestDto;
+import com.ajouchong.dto.response.RulePostResponseDto;
 import com.ajouchong.service.RulePostService;
 import org.springframework.web.bind.annotation.*;
 

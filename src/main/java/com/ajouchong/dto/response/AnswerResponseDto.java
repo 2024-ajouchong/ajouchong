@@ -1,4 +1,4 @@
-package com.ajouchong.dto;
+package com.ajouchong.dto.response;
 
 import com.ajouchong.entity.Answer;
 import lombok.Getter;

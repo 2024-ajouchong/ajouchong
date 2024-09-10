@@ -1,9 +1,9 @@
 package com.ajouchong.service;
 
-import com.ajouchong.dto.AnswerRequestDto;
-import com.ajouchong.dto.AnswerResponseDto;
-import com.ajouchong.dto.QnaPostRequestDto;
-import com.ajouchong.dto.QnaPostResponseDto;
+import com.ajouchong.dto.request.AnswerRequestDto;
+import com.ajouchong.dto.response.AnswerResponseDto;
+import com.ajouchong.dto.request.QnaPostRequestDto;
+import com.ajouchong.dto.response.QnaPostResponseDto;
 import com.ajouchong.entity.Answer;
 import com.ajouchong.entity.QnaPost;
 import com.ajouchong.repository.AnswerRepository;

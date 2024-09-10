@@ -1,7 +1,7 @@
 package com.ajouchong.service;
 
-import com.ajouchong.dto.NoticePostResponseDto;
-import com.ajouchong.dto.NoticePostUploadDto;
+import com.ajouchong.dto.response.NoticePostResponseDto;
+import com.ajouchong.dto.request.NoticePostUploadRequestDto;
 import com.ajouchong.entity.Member;
 import com.ajouchong.entity.NoticePost;
 import com.ajouchong.entity.NoticePostImage;
@@ -27,7 +27,7 @@ public class NoticePostService {
     private final NoticePostImageRepository noticePostImageRepository;
 
     @Transactional
-    public NoticePostResponseDto saveNoticePost(NoticePostUploadDto dto, String token) {
+    public NoticePostResponseDto saveNoticePost(NoticePostUploadRequestDto dto, String token) {
 
         String email = jwtTokenProvider.getUserEmailFromToken(token);
 

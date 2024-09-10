@@ -1,6 +1,6 @@
 package com.ajouchong.service;
 
-import com.ajouchong.dto.AddMemberRequestDto;
+import com.ajouchong.dto.request.AddMemberRequestDto;
 import com.ajouchong.entity.Member;
 import com.ajouchong.exception.DuplicateEmailException;
 import com.ajouchong.repository.MemberRepository;

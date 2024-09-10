@@ -1,7 +1,7 @@
 package com.ajouchong.controller.admin;
 
 import com.ajouchong.common.ApiResponse;
-import com.ajouchong.dto.AdminInfoRequestDto;
+import com.ajouchong.dto.request.AdminInfoRequestDto;
 import com.ajouchong.entity.Admin;
 import com.ajouchong.entity.IntroPost;
 import com.ajouchong.entity.enumClass.IntroPostPageName;

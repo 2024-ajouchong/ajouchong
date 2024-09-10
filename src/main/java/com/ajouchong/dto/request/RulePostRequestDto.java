@@ -1,4 +1,4 @@
-package com.ajouchong.dto;
+package com.ajouchong.dto.request;
 
 import com.ajouchong.entity.enumClass.RuleType;
 import lombok.Getter;
