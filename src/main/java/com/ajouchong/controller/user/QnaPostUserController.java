@@ -1,8 +1,8 @@
 package com.ajouchong.controller.user;
 
 import com.ajouchong.common.ApiResponse;
-import com.ajouchong.dto.QnaPostRequestDto;
-import com.ajouchong.dto.QnaPostResponseDto;
+import com.ajouchong.dto.request.QnaPostRequestDto;
+import com.ajouchong.dto.response.QnaPostResponseDto;
 import com.ajouchong.entity.QnaPost;
 import com.ajouchong.service.QnaPostService;
 import org.springframework.web.bind.annotation.*;

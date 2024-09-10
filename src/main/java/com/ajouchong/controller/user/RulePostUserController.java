@@ -1,7 +1,7 @@
 package com.ajouchong.controller.user;
 
 import com.ajouchong.common.ApiResponse;
-import com.ajouchong.dto.RulePostResponseDto;
+import com.ajouchong.dto.response.RulePostResponseDto;
 import com.ajouchong.entity.enumClass.RuleType;
 import com.ajouchong.service.RulePostService;
 import org.springframework.web.bind.annotation.*;

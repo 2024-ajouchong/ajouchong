@@ -1,8 +1,8 @@
 package com.ajouchong.controller.admin;
 
 import com.ajouchong.common.ApiResponse;
-import com.ajouchong.dto.NoticePostResponseDto;
-import com.ajouchong.dto.NoticePostUploadDto;
+import com.ajouchong.dto.response.NoticePostResponseDto;
+import com.ajouchong.dto.request.NoticePostUploadRequestDto;
 import com.ajouchong.service.NoticePostService;
 import org.springframework.web.bind.annotation.*;
 
@@ -17,7 +17,7 @@ public class NoticePostAdminController {
 
     @PostMapping
     public ApiResponse<NoticePostResponseDto> uploadNoticePost(
-            @RequestBody NoticePostUploadDto dto,
+            @RequestBody NoticePostUploadRequestDto dto,
             @RequestHeader("Authorization") String authorizationHeader) {
 
         String token = authorizationHeader.substring(7);

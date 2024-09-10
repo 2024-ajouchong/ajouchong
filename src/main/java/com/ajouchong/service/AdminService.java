@@ -1,6 +1,6 @@
 package com.ajouchong.service;
 
-import com.ajouchong.dto.AdminInfoRequestDto;
+import com.ajouchong.dto.request.AdminInfoRequestDto;
 import com.ajouchong.entity.Admin;
 import com.ajouchong.repository.AdminRepository;
 import lombok.RequiredArgsConstructor;

@@ -1,7 +1,7 @@
 package com.ajouchong.controller.user;
 
 import com.ajouchong.common.ApiResponse;
-import com.ajouchong.dto.NoticePostResponseDto;
+import com.ajouchong.dto.response.NoticePostResponseDto;
 import com.ajouchong.service.NoticePostService;
 import org.springframework.web.bind.annotation.*;
 
