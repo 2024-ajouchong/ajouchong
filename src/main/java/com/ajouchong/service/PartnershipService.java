@@ -66,33 +66,21 @@ public class PartnershipService {
         partnership.setPsContent(requestDto.getContent());
         partnership.setPsUpdateTime(LocalDateTime.now());
 
-        partnershipImageRepository.deleteAll(partnership.getImages());
+        List<PartnershipImage> existingImages = partnership.getImages();
 
-        List<PartnershipImage> images = new ArrayList<>();
+        existingImages.clear();
+
         for (int i = 0; i < requestDto.getImageUrls().size(); i++) {
             String imageUrl = requestDto.getImageUrls().get(i);
-            PartnershipImage image = new PartnershipImage();
-            image.setImageUrl(imageUrl);
-            image.setImageOrder(i);
-            image.setPartnership(partnership);
-            images.add(image);
+            PartnershipImage newImage = new PartnershipImage();
+            newImage.setImageUrl(imageUrl);
+            newImage.setImageOrder(i);
+            newImage.setPartnership(partnership);
+            existingImages.add(newImage);
         }
 
-        partnership.setImages(images);
         partnershipRepository.save(partnership);
-        partnershipImageRepository.saveAll(images);
-
-        List<String> imageUrls = images.stream().map(PartnershipImage::getImageUrl).collect(Collectors.toList());
-        return new PartnershipResponseDto(
-                partnership.getPsPostId(),
-                partnership.getPsTitle(),
-                partnership.getPsContent(),
-                partnership.getPsUserLikeCnt(),
-                partnership.getPsHitCnt(),
-                partnership.getPsCreateTime(),
-                partnership.getPsUpdateTime(),
-                imageUrls
-        );
+        return convertToDto(partnership);
     }
 
     @Transactional(readOnly = true)
