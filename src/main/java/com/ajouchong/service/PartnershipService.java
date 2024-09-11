@@ -57,6 +57,44 @@ public class PartnershipService {
         );
     }
 
+    @Transactional
+    public PartnershipResponseDto changePartnership(Long id, PartnershipRequestDto requestDto) {
+        Partnership partnership = partnershipRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException(id + "번 게시글을 찾을 수 없습니다."));
+
+        partnership.setPsTitle(requestDto.getTitle());
+        partnership.setPsContent(requestDto.getContent());
+        partnership.setPsUpdateTime(LocalDateTime.now());
+
+        partnershipImageRepository.deleteAll(partnership.getImages());
+
+        List<PartnershipImage> images = new ArrayList<>();
+        for (int i = 0; i < requestDto.getImageUrls().size(); i++) {
+            String imageUrl = requestDto.getImageUrls().get(i);
+            PartnershipImage image = new PartnershipImage();
+            image.setImageUrl(imageUrl);
+            image.setImageOrder(i);
+            image.setPartnership(partnership);
+            images.add(image);
+        }
+
+        partnership.setImages(images);
+        partnershipRepository.save(partnership);
+        partnershipImageRepository.saveAll(images);
+
+        List<String> imageUrls = images.stream().map(PartnershipImage::getImageUrl).collect(Collectors.toList());
+        return new PartnershipResponseDto(
+                partnership.getPsPostId(),
+                partnership.getPsTitle(),
+                partnership.getPsContent(),
+                partnership.getPsUserLikeCnt(),
+                partnership.getPsHitCnt(),
+                partnership.getPsCreateTime(),
+                partnership.getPsUpdateTime(),
+                imageUrls
+        );
+    }
+
     @Transactional(readOnly = true)
     public List<PartnershipResponseDto> getAllPartnerships() {
         List<Partnership> partnerships = partnershipRepository.findAll();
