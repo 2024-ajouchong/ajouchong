@@ -11,8 +11,13 @@ spring:
     properties:
       hibernate:
         show_sql: true
-
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+  sql:
+    init:
+      mode: always
 
 jwt:
   secret: ${secret}
   expiration_time: 86400000 #1일
+server:
+  port: 20232
