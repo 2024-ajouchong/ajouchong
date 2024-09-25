@@ -10,7 +10,7 @@ import com.ajouchong.service.IntroPostService;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/about")
+@RequestMapping("api/admin/about")
 public class IntroPostAdminController {
     private final IntroPostService introPostService;
     private final AdminService adminService;

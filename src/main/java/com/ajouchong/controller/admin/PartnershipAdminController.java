@@ -7,7 +7,7 @@ import com.ajouchong.service.PartnershipService;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/partnership")
+@RequestMapping("api/admin/partnership")
 public class PartnershipAdminController {
     private final PartnershipService partnershipService;
 

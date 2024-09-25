@@ -7,7 +7,7 @@ import com.ajouchong.service.NoticePostService;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/notice")
+@RequestMapping("api/admin/notice")
 public class NoticePostAdminController {
     private final NoticePostService noticePostService;
 
