@@ -16,7 +16,7 @@ import java.util.Optional;
 
 @RequiredArgsConstructor
 @RestController
-@RequestMapping("/about")
+@RequestMapping("api/about")
 public class IntroPostUserController {
 
     private final IntroPostService introPostService;
