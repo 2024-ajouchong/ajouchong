@@ -7,7 +7,7 @@ import com.ajouchong.service.RulePostService;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/data")
+@RequestMapping("api/admin/data")
 public class RulePostAdminController {
     private final RulePostService rulePostService;
 

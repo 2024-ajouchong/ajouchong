@@ -8,7 +8,7 @@ import com.ajouchong.service.QnaPostService;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/qna")
+@RequestMapping("api/admin/qna")
 public class QnaPostAdminController {
     private final QnaPostService qnaPostService;
 

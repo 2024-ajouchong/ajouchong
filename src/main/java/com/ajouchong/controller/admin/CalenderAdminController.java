@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import java.time.LocalDate;
 
 @RestController
-@RequestMapping("/notice/calender")
+@RequestMapping("api/admin/notice/calender")
 public class CalenderAdminController {
     private final EventService eventService;
 

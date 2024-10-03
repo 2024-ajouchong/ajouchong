@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/qna")
+@RequestMapping("api/qna")
 public class QnaPostUserController {
     private final QnaPostService qnaPostService;
 
